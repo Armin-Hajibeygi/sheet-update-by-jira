@@ -41,5 +41,5 @@ print("G-Sheet Connected")
 print("-----------------------------------------------")
 
 print("Start Updating DEL ...")
-workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "developed_by", "estimate", "impact", "status")
+workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
 print("DEL Updated ^^")

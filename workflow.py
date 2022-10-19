@@ -1,5 +1,4 @@
 import googleSheet
-from tickets import Ticket
 import pandas as pd
 from jira import JIRA
 
@@ -42,6 +41,10 @@ def get_ticket(jira, sheet_connector, jql, *args):
                 ticket.append(get_impact(issue))
             elif (args[attr] == "estimate"):
                 ticket.append(get_estimate(issue))
+            elif (args[attr] == "review_by"):
+                ticket.append(get_reviewed_by(issue))
+            elif (args[attr] == "review_estimate"):
+                ticket.append(get_review_estimate(issue))
 
         insert_issues(ticket, sheet_connector, index)
         index += 1
@@ -75,6 +78,10 @@ def update_tickets(jira, sheet_connector, *args):
                     ticket.append(get_impact(issue))
                 elif (args[attr] == "estimate"):
                     ticket.append(get_estimate(issue))
+                elif (args[attr] == "review_by"):
+                    ticket.append(get_reviewed_by(issue))
+                elif (args[attr] == "review_estimate"):
+                    ticket.append(get_review_estimate(issue))
 
         insert_issues(ticket, sheet_connector, index)
         index += 1
@@ -143,6 +150,28 @@ def get_estimate(issue):
     try:
         estimate = int(issue_estimate)
     except:
-        estimate = ""
+        estimate = 0
 
     return estimate
+
+
+def get_reviewed_by(issue):
+    issue_reviewed_by = issue.fields.customfield_10508
+
+    try:
+        reviewed_by = issue_reviewed_by.name
+    except:
+        reviewed_by = "-"
+
+    return reviewed_by
+
+
+def get_review_estimate(issue):
+    issue_review_estimate = issue.fields.customfield_10530
+
+    try:
+        review_estimate = int(issue_review_estimate)
+    except:
+        review_estimate = 0
+
+    return review_estimate

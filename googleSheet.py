@@ -15,7 +15,7 @@ class Sheet:
         for i in range(len(row)):
             self.sheet.update_cell(index, i+1, row[i])
         
-        time.sleep(8)
+        time.sleep(5)
 
     
     def get_sheet_tickets(self):
