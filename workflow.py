@@ -45,6 +45,8 @@ def get_ticket(jira, sheet_connector, jql, *args):
                 ticket.append(get_reviewed_by(issue))
             elif (args[attr] == "review_estimate"):
                 ticket.append(get_review_estimate(issue))
+            elif (args[attr] == "side"):
+                    ticket.append(get_side(issue))
 
         insert_issues(ticket, sheet_connector, index)
         index += 1
@@ -82,6 +84,8 @@ def update_tickets(jira, sheet_connector, *args):
                     ticket.append(get_reviewed_by(issue))
                 elif (args[attr] == "review_estimate"):
                     ticket.append(get_review_estimate(issue))
+                elif (args[attr] == "side"):
+                    ticket.append(get_side(issue))
 
         insert_issues(ticket, sheet_connector, index)
         index += 1
@@ -117,6 +121,9 @@ def update_field(jira, sheet_connector, column, field):
                 ticket_field = get_reviewed_by(issue)
             elif (field == "review_estimate"):
                 ticket_field = get_review_estimate(issue)
+            elif (field == "side"):
+                    ticket.append(get_side(issue))
+            
 
             sheet_connector.update_field(index+2, column, ticket_field)
         
@@ -210,3 +217,10 @@ def get_review_estimate(issue):
         review_estimate = 0
 
     return review_estimate
+
+
+def get_side(issue):
+    ticket_key = get_key(issue)
+    dash_place = ticket_key.rfind('-')
+    side = ticket_key[:dash_place]
+    return side

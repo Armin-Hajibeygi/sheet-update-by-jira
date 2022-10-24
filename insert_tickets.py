@@ -6,7 +6,7 @@ password = "Ahb137928!"
 
 os.system('clear')
 
-squad = int(input("Choose Squad: \n 1.DEL \n 2.FC \n 3.DSH \n"))
+squad = int(input("Choose Squad: \n 1.DEL \n 2.FC \n 3.Front \n 4.Plat \n"))
 sheet_id = int(input("Please Enter Sheet ID \n"))
 
 df = pd.read_csv("sheet_id.csv")
@@ -16,6 +16,9 @@ elif squad == 2:
     df.loc[0, 'sheet_id'] = sheet_id
 elif squad == 3:
     df.loc[2, 'sheet_id'] = sheet_id
+elif squad == 4:
+    df.loc[3, 'sheet_id'] = sheet_id
+
 df.to_csv("sheet_id.csv", index=False)
 
 file = open('sheet_id.csv')
@@ -26,7 +29,8 @@ for row in csvreader:
 
 fc_id = int(sheet_ids["FC"])
 del_id = int(sheet_ids["DEL"])
-dsh_id = int(sheet_ids["DSH"])
+front_id = int(sheet_ids["Front"])
+platform_id = int(sheet_ids["Plat"])
 
 file.close()
 
@@ -43,8 +47,12 @@ elif squad == 2:
     jql = 'project = DKFC AND Sprint in openSprints() AND  (status = "Sprint Backlog" OR status = In-Progress) AND Side = Back-End ORDER BY priority DESC, cf[10201] ASC'
     workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "epic", "developed_by", "estimate", "impact", "status")
 elif squad == 3:
-    sheet_connector = workflow.connect_sheet("DSH - Report", dsh_id)
-    jql = 'labels in (DSH_-_Sorting_center, DSH_-_Core, DSH_-_Integrations, DSH_-_MidMile, DSH_-_Pickup, DSH_-_Price_Engine) ORDER BY createdDate DESC'
+    sheet_connector = workflow.connect_sheet("[OPS] Front Sprints - 01", front_id)
+    jql = '(project = DKFC OR project = Delivery) AND  Sprint in openSprints() AND  (status = "Sprint Backlog" OR status = In-Progress) AND Side = Front-End ORDER BY priority DESC, cf[10201] ASC'
+    workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "side", "epic", "developed_by", "estimate", "impact", "status") 
+elif squad == 4:
+    sheet_connector = workflow.connect_sheet("[Platform] Sprints", platform_id)
+    jql = ''
     workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "epic", "estimate", "status") 
 
 os.system('clear')
