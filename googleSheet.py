@@ -23,9 +23,35 @@ class Sheet:
         
         number_of_tickets = len(self.sheet.col_values(1))
 
+        if (number_of_tickets >= 60):
+            self.sheet_tickets, number_of_tickets = self.get_sheet_tickets_long()
+        
+        else:
+            print(f"Total Number of Tickets: {number_of_tickets - 1}")
+            print("Loading Tickets ...")
+
+            for i in range(number_of_tickets - 1):
+                self.sheet_tickets.append(self.sheet.cell(i+2, 1).value)
+        
+        return self.sheet_tickets, number_of_tickets
+
+    
+    def get_sheet_tickets_long(self):
+        self.sheet_tickets = list()
+        
+        number_of_tickets = len(self.sheet.col_values(1))
+
         print(f"Total Number of Tickets: {number_of_tickets - 1}")
+        print("^^ Packets are flowing through the internet to you ^^")
 
         for i in range(number_of_tickets - 1):
             self.sheet_tickets.append(self.sheet.cell(i+2, 1).value)
+            if (i % 10 == 0):
+                time.sleep(7)
         
         return self.sheet_tickets, number_of_tickets
+
+    
+    def update_field(self, row, column, value):
+        self.sheet.update_cell(row, column, value)
+        time.sleep(1)

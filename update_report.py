@@ -11,6 +11,7 @@ for row in csvreader:
 
 fc_id = int(sheet_ids["FC"])
 del_id = int(sheet_ids["DEL"])
+dsh_id = int(sheet_ids["DSH"])
 
 file.close()
 
@@ -42,4 +43,19 @@ print("-----------------------------------------------")
 
 print("Start Updating DEL ...")
 workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
+print("DEL Updated ^^")
+
+print("-----------------------------------------------")
+print("... Connecting DSH ...")
+
+#Update DSH Status
+jira_connector = workflow.connect_jira(username, password)
+print("Jira Connected")
+
+sheet_connector = workflow.connect_sheet("DSH - Report", dsh_id)
+print("G-Sheet Connected")
+print("-----------------------------------------------")
+
+print("Start Updating DSH ...")
+workflow.update_field(jira_connector, sheet_connector, 5, "status")
 print("DEL Updated ^^")

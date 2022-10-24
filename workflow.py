@@ -16,12 +16,12 @@ def get_ticket(jira, sheet_connector, jql, *args):
     
     index = 0
     remaining_tickets = 0
-    for issue in jira.search_issues(jql):
+    for issue in jira.search_issues(jql, maxResults=500):
         remaining_tickets += 1
 
     print(f"Number of tickets: {remaining_tickets}")
 
-    for issue in jira.search_issues(jql):
+    for issue in jira.search_issues(jql, maxResults=500):
         print(f"Remaining: {remaining_tickets}")
         remaining_tickets -= 1
 
@@ -87,6 +87,41 @@ def update_tickets(jira, sheet_connector, *args):
         index += 1
 
 
+def update_field(jira, sheet_connector, column, field):
+    sheet_tickets, remaining_tickets = sheet_connector.get_sheet_tickets()
+
+    index = 0
+
+    for ticket in sheet_tickets:
+        jql = "key = " + ticket 
+
+        remaining_tickets -= 1
+        print(f"Remaining: {remaining_tickets}")
+
+        for issue in jira.search_issues(jql):
+            if (field == "key"):
+                ticket_field = get_key(issue)
+            elif (field == "summary"):
+                ticket_field = get_summary(issue)
+            elif (field == "epic"):
+                ticket_field = get_epic(jira, issue)
+            elif (field == "status"):
+                ticket_field = get_status(issue)
+            elif (field == "developed_by"):
+                ticket_field = get_developed_by(issue)
+            elif (field == "impact"):
+                ticket_field = get_impact(issue)
+            elif (field == "estimate"):
+                ticket_field = get_estimate(issue)
+            elif (field == "review_by"):
+                ticket_field = get_reviewed_by(issue)
+            elif (field == "review_estimate"):
+                ticket_field = get_review_estimate(issue)
+
+            sheet_connector.update_field(index+2, column, ticket_field)
+        
+        index += 1
+
 
 def insert_issues(ticket_info, sheet_connector, index):
     sheet_connector.insert_ticket(ticket_info, index+2)
@@ -150,7 +185,7 @@ def get_estimate(issue):
     try:
         estimate = int(issue_estimate)
     except:
-        estimate = 0
+        estimate = 3
 
     return estimate
 
