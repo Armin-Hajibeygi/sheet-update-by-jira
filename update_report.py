@@ -19,60 +19,118 @@ file.close()
 
 os.system('clear')
 
-print("... Connecting FC ...")
-#Update FC
-jira_connector = workflow.connect_jira(username, password)
-print("Jira Connected")
+update_type = int(input("Please choose your update type \n 1.Complete \n 2.Fast \n"))
 
-sheet_connector = workflow.connect_sheet("[FC] Sprints - 01", fc_id)
-print("G-Sheet Connected")
-print("-----------------------------------------------")
+if (update_type == 1):
+    print("... Connecting FC ...")
+    #Update FC
+    jira_connector = workflow.connect_jira(username, password)
+    print("Jira Connected")
 
-print("Start Updating FC ...")
-workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "developed_by", "estimate", "impact", "status")
-print("FC Updated ^^")
+    sheet_connector = workflow.connect_sheet("[FC] Sprints - 01", fc_id)
+    print("G-Sheet Connected")
+    print("-----------------------------------------------")
 
-print("-----------------------------------------------")
-print("... Connecting DEL ...")
+    print("Start Updating FC ...")
+    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "developed_by", "estimate", "impact", "status")
+    print("FC Updated ^^")
 
-#Update DEL
-jira_connector = workflow.connect_jira(username, password)
-print("Jira Connected")
+    print("-----------------------------------------------")
+    print("... Connecting DEL ...")
 
-sheet_connector = workflow.connect_sheet("[DEL] Sprints - 01", del_id)
-print("G-Sheet Connected")
-print("-----------------------------------------------")
+    #Update DEL
+    jira_connector = workflow.connect_jira(username, password)
+    print("Jira Connected")
 
-print("Start Updating DEL ...")
-workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
-print("DEL Updated ^^")
+    sheet_connector = workflow.connect_sheet("[DEL] Sprints - 01", del_id)
+    print("G-Sheet Connected")
+    print("-----------------------------------------------")
 
-print("-----------------------------------------------")
-print("... Connecting Front ...")
+    print("Start Updating DEL ...")
+    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
+    print("DEL Updated ^^")
 
-#Update Front
-jira_connector = workflow.connect_jira(username, password)
-print("Jira Connected")
+    print("-----------------------------------------------")
+    print("... Connecting Front ...")
 
-sheet_connector = workflow.connect_sheet("[OPS] Front Sprints - 01", front_id)
-print("G-Sheet Connected")
-print("-----------------------------------------------")
+    #Update Front
+    jira_connector = workflow.connect_jira(username, password)
+    print("Jira Connected")
 
-print("Start Updating Front ...")
-workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "side", "epic", "developed_by", "estimate", "impact", "status")
-print("Front Updated ^^")
+    sheet_connector = workflow.connect_sheet("[OPS] Front Sprints - 01", front_id)
+    print("G-Sheet Connected")
+    print("-----------------------------------------------")
 
-print("-----------------------------------------------")
-print("... Connecting DSH ...")
+    print("Start Updating Front ...")
+    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "side", "epic", "developed_by", "estimate", "impact", "status")
+    print("Front Updated ^^")
 
-#Update DSH Status
-jira_connector = workflow.connect_jira(username, password)
-print("Jira Connected")
+    print("-----------------------------------------------")
+    print("... Connecting DSH ...")
 
-sheet_connector = workflow.connect_sheet("DSH - Report", dsh_id)
-print("G-Sheet Connected")
-print("-----------------------------------------------")
+    #Update DSH Status
+    jira_connector = workflow.connect_jira(username, password)
+    print("Jira Connected")
 
-print("Start Updating DSH ...")
-workflow.update_field(jira_connector, sheet_connector, 5, "status")
-print("DEL Updated ^^")
+    sheet_connector = workflow.connect_sheet("DSH - Report", dsh_id)
+    print("G-Sheet Connected")
+    print("-----------------------------------------------")
+
+    print("Start Updating DSH ...")
+    workflow.update_field(jira_connector, sheet_connector, 5, "status")
+    print("DEL Updated ^^")
+
+elif (update_type == 2):
+    print("... Connecting FC ...")
+    #Update FC
+    jira_connector = workflow.connect_jira(username, password)
+    print("Jira Connected")
+
+    sheet_connector = workflow.connect_sheet("[FC] Sprints - 01", fc_id)
+    print("G-Sheet Connected")
+    print("-----------------------------------------------")
+
+    print("Start Updating FC ...")
+    print("Updating Status")
+    workflow.update_field(jira_connector, sheet_connector, 7, "status")
+    print("Updating Developer")
+    workflow.update_field(jira_connector, sheet_connector, 4, "developed_by")
+    print("FC Updated ^^")
+
+    print("-----------------------------------------------")
+    print("... Connecting DEL ...")
+
+    #Update DEL
+    jira_connector = workflow.connect_jira(username, password)
+    print("Jira Connected")
+
+    sheet_connector = workflow.connect_sheet("[DEL] Sprints - 01", del_id)
+    print("G-Sheet Connected")
+    print("-----------------------------------------------")
+
+    print("Start Updating DEL ...")
+    print("Updating Status")
+    workflow.update_field(jira_connector, sheet_connector, 9, "status")
+    print("Updating Developer")
+    workflow.update_field(jira_connector, sheet_connector, 4, "developed_by")
+    print("Updating Review")
+    workflow.update_field(jira_connector, sheet_connector, 6, "review_by")
+    print("DEL Updated ^^")
+
+    print("-----------------------------------------------")
+    print("... Connecting Front ...")
+
+    #Update Front
+    jira_connector = workflow.connect_jira(username, password)
+    print("Jira Connected")
+
+    sheet_connector = workflow.connect_sheet("[OPS] Front Sprints - 01", front_id)
+    print("G-Sheet Connected")
+    print("-----------------------------------------------")
+
+    print("Start Updating Front ...")
+    print("Updating Status")
+    workflow.update_field(jira_connector, sheet_connector, 8, "status")
+    print("Updating Developer")
+    workflow.update_field(jira_connector, sheet_connector, 5, "developed_by")
+    print("Front Updated ^^")
