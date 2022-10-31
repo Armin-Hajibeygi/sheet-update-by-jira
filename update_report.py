@@ -78,7 +78,7 @@ if (update_type == 1):
 
     print("Start Updating DSH ...")
     workflow.update_field(jira_connector, sheet_connector, 5, "status")
-    print("DEL Updated ^^")
+    print("DSH Updated ^^")
 
 elif (update_type == 2):
     print("... Connecting FC ...")
