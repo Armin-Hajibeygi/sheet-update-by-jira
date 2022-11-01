@@ -149,7 +149,7 @@ def get_epic(jira, issue):
     epic_jql = "key = " + str(issue.fields.customfield_10102)
     try:
         epic = jira.search_issues(epic_jql)
-        epic_name = epic[0].fields.summary
+        epic_name = epic[0].fields.customfield_10104
     except:
         epic_name = ""
     
