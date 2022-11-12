@@ -45,7 +45,7 @@ if squad == 1:
 elif squad == 2:
     sheet_connector = workflow.connect_sheet("[FC] Sprints - 01", fc_id)
     jql = 'project = DKFC AND Sprint in openSprints() AND  (status = "Sprint Backlog" OR status = In-Progress) AND Side = Back-End ORDER BY priority DESC, cf[10201] ASC'
-    workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "epic", "developed_by", "estimate", "impact", "status")
+    workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "epic", "developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
 elif squad == 3:
     sheet_connector = workflow.connect_sheet("[OPS] Front Sprints - 01", front_id)
     jql = '(project = DKFC OR project = Delivery) AND  Sprint in openSprints() AND  (status = "Sprint Backlog" OR status = In-Progress) AND Side = Front-End ORDER BY priority DESC, cf[10201] ASC'

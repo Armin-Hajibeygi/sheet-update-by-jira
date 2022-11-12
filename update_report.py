@@ -32,7 +32,7 @@ if (update_type == 1):
     print("-----------------------------------------------")
 
     print("Start Updating FC ...")
-    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "developed_by", "estimate", "impact", "status")
+    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
     print("FC Updated ^^")
 
     print("-----------------------------------------------")
