@@ -64,6 +64,19 @@ if (update_type == 1):
     print("Start Updating Front ...")
     workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "side", "epic", "developed_by", "estimate", "impact", "status")
     print("Front Updated ^^")
+    
+    #Update Platform
+    jira_connector = workflow.connect_jira(username, password)
+    print("Jira Connected")
+
+    sheet_connector = workflow.connect_sheet("[Platform] Sprints", platform_id)
+    print("G-Sheet Connected")
+    print("-----------------------------------------------")
+
+    print("Start Updating Platform ...")
+    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "step", "assignee","epic", "estimate", "impact", "status")
+    print("Platform Updated ^^")
+
 
     print("-----------------------------------------------")
     print("... Connecting DSH ...")
@@ -134,3 +147,18 @@ elif (update_type == 2):
     print("Updating Developer")
     workflow.update_field(jira_connector, sheet_connector, 5, "developed_by")
     print("Front Updated ^^")
+    
+    #Update Platform
+    jira_connector = workflow.connect_jira(username, password)
+    print("Jira Connected")
+
+    sheet_connector = workflow.connect_sheet("[Platform] Sprints", platform_id)
+    print("G-Sheet Connected")
+    print("-----------------------------------------------")
+
+    print("Start Updating Platform ...")
+    print("Updating Status")
+    workflow.update_field(jira_connector, sheet_connector, 8, "status")
+    print("Updating Developer")
+    workflow.update_field(jira_connector, sheet_connector, 4, "assignee")
+    print("Platform Updated ^^")

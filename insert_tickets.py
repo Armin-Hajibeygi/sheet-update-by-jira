@@ -52,7 +52,7 @@ elif squad == 3:
     workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "side", "epic", "developed_by", "estimate", "impact", "status") 
 elif squad == 4:
     sheet_connector = workflow.connect_sheet("[Platform] Sprints", platform_id)
-    jql = ''
-    workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "epic", "estimate", "status") 
+    jql = 'project =Platform AND status in ("DX Sprint Backlog", "SRE Sprint Backlog", "SN Sprint Backlog", "Infrastructure Sprint Backlog") AND Sprint in openSprints() ORDER BY priority DESC, cf[10201] ASC'
+    workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "step", "assignee","epic", "estimate", "impact", "status") 
 
 os.system('clear')

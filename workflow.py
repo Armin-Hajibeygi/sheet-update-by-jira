@@ -47,6 +47,10 @@ def get_ticket(jira, sheet_connector, jql, *args):
                 ticket.append(get_review_estimate(issue))
             elif (args[attr] == "side"):
                     ticket.append(get_side(issue))
+            elif (args[attr] == "step"):
+                    ticket.append(get_step(issue))
+            elif (args[attr] == "assignee"):
+                    ticket.append(get_assignee(issue))
 
         insert_issues(ticket, sheet_connector, index)
         index += 1
@@ -86,6 +90,10 @@ def update_tickets(jira, sheet_connector, *args):
                     ticket.append(get_review_estimate(issue))
                 elif (args[attr] == "side"):
                     ticket.append(get_side(issue))
+                elif (args[attr] == "step"):
+                    ticket.append(get_step(issue))
+                elif (args[attr] == "assignee"):
+                    ticket.append(get_assignee(issue))
 
         insert_issues(ticket, sheet_connector, index)
         index += 1
@@ -122,7 +130,11 @@ def update_field(jira, sheet_connector, column, field):
             elif (field == "review_estimate"):
                 ticket_field = get_review_estimate(issue)
             elif (field == "side"):
-                    ticket.append(get_side(issue))
+                ticket_field = get_side(issue)
+            elif (field == "step"):
+                ticket_field = get_step(issue)
+            elif (field == "assignee"):
+                ticket_field = get_assignee(issue)
             
 
             sheet_connector.update_field(index+2, column, ticket_field)
@@ -192,7 +204,7 @@ def get_estimate(issue):
     try:
         estimate = int(issue_estimate)
     except:
-        estimate = 3
+        estimate = 0
 
     return estimate
 
@@ -224,3 +236,18 @@ def get_side(issue):
     dash_place = ticket_key.rfind('-')
     side = ticket_key[:dash_place]
     return side
+
+
+def get_step(issue):
+    issue_side = issue.fields.customfield_10531.value
+    
+    return issue_side
+    
+
+def get_assignee(issue):
+    try:
+        assignee = issue.fields.assignee.name
+    except:
+        assignee = ""
+    
+    return assignee
