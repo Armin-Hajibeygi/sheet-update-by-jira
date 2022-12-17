@@ -1,5 +1,4 @@
 import googleSheet
-import pandas as pd
 from jira import JIRA
 
 
@@ -51,8 +50,12 @@ def get_ticket(jira, sheet_connector, jql, *args):
                     ticket.append(get_step(issue))
             elif (args[attr] == "assignee"):
                     ticket.append(get_assignee(issue))
+            elif (args[attr] == "unit_test_estimate"):
+                    ticket.append(get_unit_test_estimate(issue))
+            elif (args[attr] == "number_of_returns_from_review"):
+                    ticket.append(get_number_of_returns_from_review(issue))
 
-        insert_issues(ticket, sheet_connector, index)
+        insert_issues(ticket, sheet_connector, index, 0)
         index += 1
 
 
@@ -94,8 +97,12 @@ def update_tickets(jira, sheet_connector, *args):
                     ticket.append(get_step(issue))
                 elif (args[attr] == "assignee"):
                     ticket.append(get_assignee(issue))
+                elif (args[attr] == "unit_test_estimate"):
+                    ticket.append(get_unit_test_estimate(issue))
+                elif (args[attr] == "number_of_returns_from_review"):
+                    ticket.append(get_number_of_returns_from_review(issue))
 
-        insert_issues(ticket, sheet_connector, index)
+        insert_issues(ticket[1:], sheet_connector, index, 1)
         index += 1
 
 
@@ -135,6 +142,10 @@ def update_field(jira, sheet_connector, column, field):
                 ticket_field = get_step(issue)
             elif (field == "assignee"):
                 ticket_field = get_assignee(issue)
+            elif (field == "unit_test_estimate"):
+                ticket_field = get_unit_test_estimate(issue)
+            elif (field == "number_of_returns_from_review"):
+                ticket_field = get_number_of_returns_from_review(issue)
             
 
             sheet_connector.update_field(index+2, column, ticket_field)
@@ -142,8 +153,8 @@ def update_field(jira, sheet_connector, column, field):
         index += 1
 
 
-def insert_issues(ticket_info, sheet_connector, index):
-    sheet_connector.insert_ticket(ticket_info, index+2)
+def insert_issues(ticket_info, sheet_connector, index, skip):
+    sheet_connector.insert_ticket(ticket_info, skip, index+2)
 
 
 def get_key(issue):
@@ -251,3 +262,21 @@ def get_assignee(issue):
         assignee = ""
     
     return assignee
+
+
+def get_unit_test_estimate(issue):
+    issue_unit_test_estimate = issue.fields.customfield_10751
+
+    try:
+        unit_test_estimate = int(issue_unit_test_estimate)
+    except:
+        unit_test_estimate = 0
+
+    return unit_test_estimate
+
+
+def get_number_of_returns_from_review(issue):
+    try:
+        return (int(issue.fields.customfield_10751))
+    except:
+        return 0

@@ -42,12 +42,12 @@ if (update_type == 1):
     jira_connector = workflow.connect_jira(username, password)
     print("Jira Connected")
 
-    sheet_connector = workflow.connect_sheet("[DEL] Sprints - 01", del_id)
+    sheet_connector = workflow.connect_sheet("[DEL] Sprints - All", del_id)
     print("G-Sheet Connected")
     print("-----------------------------------------------")
 
     print("Start Updating DEL ...")
-    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
+    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "developed_by", "estimate", "unit_test_estimate", "review_by", "impact", "status")
     print("DEL Updated ^^")
 
     print("-----------------------------------------------")
@@ -65,6 +65,8 @@ if (update_type == 1):
     workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "side", "epic", "developed_by", "estimate", "impact", "status")
     print("Front Updated ^^")
     
+    print("-----------------------------------------------")
+    print("... Connecting Platform ...")
     #Update Platform
     jira_connector = workflow.connect_jira(username, password)
     print("Jira Connected")
@@ -105,7 +107,7 @@ elif (update_type == 2):
 
     print("Start Updating FC ...")
     print("Updating Status")
-    workflow.update_field(jira_connector, sheet_connector, 7, "status")
+    workflow.update_field(jira_connector, sheet_connector, 9, "status")
     print("Updating Developer")
     workflow.update_field(jira_connector, sheet_connector, 4, "developed_by")
     print("FC Updated ^^")
@@ -117,7 +119,7 @@ elif (update_type == 2):
     jira_connector = workflow.connect_jira(username, password)
     print("Jira Connected")
 
-    sheet_connector = workflow.connect_sheet("[DEL] Sprints - 01", del_id)
+    sheet_connector = workflow.connect_sheet("[DEL] Sprints - All", del_id)
     print("G-Sheet Connected")
     print("-----------------------------------------------")
 
@@ -127,7 +129,9 @@ elif (update_type == 2):
     print("Updating Developer")
     workflow.update_field(jira_connector, sheet_connector, 4, "developed_by")
     print("Updating Review")
-    workflow.update_field(jira_connector, sheet_connector, 6, "review_by")
+    workflow.update_field(jira_connector, sheet_connector, 7, "review_by")
+    print("Updating Unit Test Estimate")
+    workflow.update_field(jira_connector, sheet_connector, 6, "unit_test_estimate")
     print("DEL Updated ^^")
 
     print("-----------------------------------------------")
@@ -148,6 +152,8 @@ elif (update_type == 2):
     workflow.update_field(jira_connector, sheet_connector, 5, "developed_by")
     print("Front Updated ^^")
     
+    print("-----------------------------------------------")
+    print("... Connecting Platform ...")
     #Update Platform
     jira_connector = workflow.connect_jira(username, password)
     print("Jira Connected")

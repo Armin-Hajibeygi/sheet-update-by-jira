@@ -11,9 +11,9 @@ class Sheet:
         return(list_of_records)
 
     
-    def insert_ticket(self, row, index):
+    def insert_ticket(self, row, skip, index):
         for i in range(len(row)):
-            self.sheet.update_cell(index, i+1, row[i])
+            self.sheet.update_cell(index, i+1+skip, row[i])
         
         time.sleep(8)
 
