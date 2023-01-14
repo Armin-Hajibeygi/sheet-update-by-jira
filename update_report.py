@@ -65,19 +65,20 @@ if (update_type == 1):
     workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "side", "epic", "developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
     print("Front Updated ^^")
     
-    print("-----------------------------------------------")
-    print("... Connecting Platform ...")
-    #Update Platform
-    jira_connector = workflow.connect_jira(username, password)
-    print("Jira Connected")
 
-    sheet_connector = workflow.connect_sheet("[Platform] Sprints", platform_id)
-    print("G-Sheet Connected")
-    print("-----------------------------------------------")
+    # print("-----------------------------------------------")
+    # print("... Connecting Platform ...")
+    # #Update Platform
+    # jira_connector = workflow.connect_jira(username, password)
+    # print("Jira Connected")
 
-    print("Start Updating Platform ...")
-    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "step", "assignee","epic", "estimate", "impact", "status")
-    print("Platform Updated ^^")
+    # sheet_connector = workflow.connect_sheet("[Platform] Sprints", platform_id)
+    # print("G-Sheet Connected")
+    # print("-----------------------------------------------")
+
+    # print("Start Updating Platform ...")
+    # workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "step", "assignee","epic", "estimate", "impact", "status")
+    # print("Platform Updated ^^")
 
 
 elif (update_type == 2):
@@ -137,19 +138,19 @@ elif (update_type == 2):
     workflow.update_field(jira_connector, sheet_connector, 4, "developed_by")
     print("Front Updated ^^")
     
-    print("-----------------------------------------------")
-    print("... Connecting Platform ...")
-    #Update Platform
-    jira_connector = workflow.connect_jira(username, password)
-    print("Jira Connected")
+    # print("-----------------------------------------------")
+    # print("... Connecting Platform ...")
+    # #Update Platform
+    # jira_connector = workflow.connect_jira(username, password)
+    # print("Jira Connected")
 
-    sheet_connector = workflow.connect_sheet("[Platform] Sprints", platform_id)
-    print("G-Sheet Connected")
-    print("-----------------------------------------------")
+    # sheet_connector = workflow.connect_sheet("[Platform] Sprints", platform_id)
+    # print("G-Sheet Connected")
+    # print("-----------------------------------------------")
 
-    print("Start Updating Platform ...")
-    print("Updating Status")
-    workflow.update_field(jira_connector, sheet_connector, 8, "status")
-    print("Updating Developer")
-    workflow.update_field(jira_connector, sheet_connector, 4, "assignee")
-    print("Platform Updated ^^")
+    # print("Start Updating Platform ...")
+    # print("Updating Status")
+    # workflow.update_field(jira_connector, sheet_connector, 8, "status")
+    # print("Updating Developer")
+    # workflow.update_field(jira_connector, sheet_connector, 4, "assignee")
+    # print("Platform Updated ^^")
