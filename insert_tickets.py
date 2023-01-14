@@ -2,7 +2,7 @@ import workflow, os, csv
 import pandas as pd
 
 username = "armin.hajibeygi"
-password = "Ahb137928!"
+password = "FaithBudgetWill137928!"
 
 os.system('clear')
 
@@ -49,7 +49,7 @@ elif squad == 2:
 elif squad == 3:
     sheet_connector = workflow.connect_sheet("[OPS] Front Sprints - 01", front_id)
     jql = '(project = DKFC OR project = Delivery) AND  Sprint in openSprints() AND  (status = "Sprint Backlog" OR status = In-Progress) AND Side = Front-End ORDER BY priority DESC, cf[10201] ASC'
-    workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "side", "epic", "developed_by", "estimate", "impact", "status") 
+    workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "side", "epic", "developed_by", "estimate", "review_by", "review_estimate", "impact", "status") 
 elif squad == 4:
     sheet_connector = workflow.connect_sheet("[Platform] Sprints", platform_id)
     jql = 'project =Platform AND status in ("DX Sprint Backlog", "SRE Sprint Backlog", "SN Sprint Backlog", "Infrastructure Sprint Backlog") AND Sprint in openSprints() ORDER BY priority DESC, cf[10201] ASC'
