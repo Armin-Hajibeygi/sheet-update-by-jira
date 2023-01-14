@@ -80,21 +80,6 @@ if (update_type == 1):
     print("Platform Updated ^^")
 
 
-    print("-----------------------------------------------")
-    print("... Connecting DSH ...")
-
-    #Update DSH Status
-    jira_connector = workflow.connect_jira(username, password)
-    print("Jira Connected")
-
-    sheet_connector = workflow.connect_sheet("DSH - Report", dsh_id)
-    print("G-Sheet Connected")
-    print("-----------------------------------------------")
-
-    print("Start Updating DSH ...")
-    workflow.update_field(jira_connector, sheet_connector, 5, "status")
-    print("DSH Updated ^^")
-
 elif (update_type == 2):
     print("... Connecting FC ...")
     #Update FC
