@@ -32,7 +32,7 @@ if (update_type == 1):
     print("-----------------------------------------------")
 
     print("Start Updating FC ...")
-    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
+    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "fc_area","developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
     print("FC Updated ^^")
 
     print("-----------------------------------------------")
@@ -95,7 +95,7 @@ elif (update_type == 2):
     print("Updating Status")
     workflow.update_field(jira_connector, sheet_connector, 9, "status")
     print("Updating Developer")
-    workflow.update_field(jira_connector, sheet_connector, 4, "developed_by")
+    workflow.update_field(jira_connector, sheet_connector, 5, "developed_by")
     print("FC Updated ^^")
 
     print("-----------------------------------------------")
