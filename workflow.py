@@ -288,5 +288,9 @@ def get_number_of_returns_from_review(issue):
         return 0
     
 def get_fc_area(issue):
-    fc_area = str(issue.fields.customfield_10770)
+    try:
+        fc_area = str(issue.fields.customfield_10770)
+    except:
+        fc_area = ""
+        
     return fc_area
