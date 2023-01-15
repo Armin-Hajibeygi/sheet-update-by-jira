@@ -56,6 +56,8 @@ def get_ticket(jira, sheet_connector, jql, *args):
                     ticket.append(get_number_of_returns_from_review(issue))
             elif (args[attr] == "fc_area"):
                     ticket.append(get_fc_area(issue))
+            elif (args[attr] == "del_area"):
+                    ticket.append(get_del_area(issue))
 
         insert_issues(ticket, sheet_connector, index, 0)
         index += 1
@@ -105,6 +107,8 @@ def update_tickets(jira, sheet_connector, *args):
                     ticket.append(get_number_of_returns_from_review(issue))
                 elif (args[attr] == "fc_area"):
                     ticket.append(get_fc_area(issue))
+                elif (args[attr] == "del_area"):
+                    ticket.append(get_del_area(issue))
 
         insert_issues(ticket[1:], sheet_connector, index, 1)
         index += 1
@@ -150,8 +154,10 @@ def update_field(jira, sheet_connector, column, field):
                 ticket_field = get_unit_test_estimate(issue)
             elif (field == "number_of_returns_from_review"):
                 ticket_field = get_number_of_returns_from_review(issue)
-            elif (args[attr] == "fc_area"):
+            elif (field == "fc_area"):
                     ticket.append(get_fc_area(issue))
+            elif (field == "del_area"):
+                    ticket.append(get_del_area(issue))
             
 
             sheet_connector.update_field(index+2, column, ticket_field)
@@ -286,6 +292,7 @@ def get_number_of_returns_from_review(issue):
         return (int(issue.fields.customfield_10751))
     except:
         return 0
+   
     
 def get_fc_area(issue):
     try:
@@ -294,3 +301,12 @@ def get_fc_area(issue):
         fc_area = ""
         
     return fc_area
+
+
+def get_del_area(issue):
+    try:
+        del_area = str(issue.fields.customfield_10773)
+    except:
+        del_area = ""
+        
+    return del_area
