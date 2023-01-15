@@ -47,7 +47,7 @@ if (update_type == 1):
     print("-----------------------------------------------")
 
     print("Start Updating DEL ...")
-    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "developed_by", "estimate", "unit_test_estimate", "review_by", "impact", "status")
+    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "del_area", "developed_by", "estimate", "unit_test_estimate", "review_by", "impact", "status")
     print("DEL Updated ^^")
 
     print("-----------------------------------------------")
@@ -111,13 +111,13 @@ elif (update_type == 2):
 
     print("Start Updating DEL ...")
     print("Updating Status")
-    workflow.update_field(jira_connector, sheet_connector, 9, "status")
+    workflow.update_field(jira_connector, sheet_connector, 10, "status")
     print("Updating Developer")
-    workflow.update_field(jira_connector, sheet_connector, 4, "developed_by")
+    workflow.update_field(jira_connector, sheet_connector, 5, "developed_by")
     print("Updating Review")
-    workflow.update_field(jira_connector, sheet_connector, 7, "review_by")
+    workflow.update_field(jira_connector, sheet_connector, 8, "review_by")
     print("Updating Unit Test Estimate")
-    workflow.update_field(jira_connector, sheet_connector, 6, "unit_test_estimate")
+    workflow.update_field(jira_connector, sheet_connector, 7, "unit_test_estimate")
     print("DEL Updated ^^")
 
     print("-----------------------------------------------")
