@@ -1,7 +1,7 @@
 import workflow, os, csv
 
 username = "armin.hajibeygi"
-password = "Ahb137928!"
+password = "FaithBudgetWill137928!"
 
 file = open('sheet_id.csv')
 csvreader = csv.reader(file)
@@ -31,5 +31,5 @@ print("G-Sheet Connected")
 print("-----------------------------------------------")
 
 print("Start Updating Metrics ...")
-workflow.update_tickets(jira_connector, sheet_connector, "key", "developed_by", "estimate", "number_of_returns_from_review")
+workflow.update_tickets(jira_connector, sheet_connector, "key", "developed_by", "estimate", "number_of_returns_from_review", "first_time_in_progress", "total_time_in_progress")
 print("Metrics Updated ^^")

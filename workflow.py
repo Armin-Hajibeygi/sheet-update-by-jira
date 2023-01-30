@@ -1,5 +1,6 @@
 import googleSheet
 from jira import JIRA
+import datetime
 
 
 def connect_jira(username, password):
@@ -9,6 +10,22 @@ def connect_jira(username, password):
 
 def connect_sheet(sheet_name, worksheet_id):
     return googleSheet.Sheet(sheet_name, worksheet_id)
+
+
+def str_time_to_datetime(complete_date):
+    year = int(complete_date[:4])
+    month = int(complete_date[5:7])
+    day = int(complete_date[8:10])
+    hour = int(complete_date[11:13])
+    minutes = int(complete_date[14:16])
+    time = datetime.datetime(year, month, day, hour, minutes)
+    
+    return time
+
+
+def date_diff(start_date, end_date):
+    diff = end_date - start_date
+    return int(diff.total_seconds() // 60)
 
 
 def get_ticket(jira, sheet_connector, jql, *args):
@@ -58,6 +75,10 @@ def get_ticket(jira, sheet_connector, jql, *args):
                     ticket.append(get_fc_area(issue))
             elif (args[attr] == "del_area"):
                     ticket.append(get_del_area(issue))
+            elif (args[attr] == "total_time_in_progress"):
+                    ticket.append(get_total_time_in_progress(issue))
+            elif (args[attr] == "first_time_in_progress"):
+                    ticket.append(get_first_time_in_progress(issue))
 
         insert_issues(ticket, sheet_connector, index, 0)
         index += 1
@@ -109,6 +130,10 @@ def update_tickets(jira, sheet_connector, *args):
                     ticket.append(get_fc_area(issue))
                 elif (args[attr] == "del_area"):
                     ticket.append(get_del_area(issue))
+                elif (args[attr] == "total_time_in_progress"):
+                    ticket.append(get_total_time_in_progress(issue))
+                elif (args[attr] == "first_time_in_progress"):
+                    ticket.append(get_first_time_in_progress(issue))
 
         insert_issues(ticket[1:], sheet_connector, index, 1)
         index += 1
@@ -158,6 +183,10 @@ def update_field(jira, sheet_connector, column, field):
                     ticket.append(get_fc_area(issue))
             elif (field == "del_area"):
                     ticket.append(get_del_area(issue))
+            elif (field == "total_time_in_progress"):
+                    ticket.append(get_total_time_in_progress(issue))
+            elif (field == "first_time_in_progress"):
+                    ticket.append(get_first_time_in_progress(issue))
             
 
             sheet_connector.update_field(index+2, column, ticket_field)
@@ -289,7 +318,7 @@ def get_unit_test_estimate(issue):
 
 def get_number_of_returns_from_review(issue):
     try:
-        return (int(issue.fields.customfield_10751))
+        return (int(issue.fields.customfield_10752))
     except:
         return 0
    
@@ -310,3 +339,35 @@ def get_del_area(issue):
         del_area = ""
         
     return del_area
+
+
+def get_total_time_in_progress(issue):
+    try:
+        start_date_str = issue.fields.customfield_10801
+        start_date = str_time_to_datetime(start_date_str)
+        
+        end_date_str = issue.fields.customfield_10802
+        end_date = str_time_to_datetime(end_date_str)
+        
+        if (end_date > start_date):
+            diff = date_diff(start_date, end_date)
+            print(diff)
+            current_time = int(issue.fields.customfield_10803)
+            new_time = int(current_time + diff)
+            if (current_time == 0):
+                issue.update(fields={'customfield_10804': new_time}) 
+        else:
+            new_time = int(issue.fields.customfield_10803)
+        
+        issue.update(fields={'customfield_10803': new_time})
+        return new_time
+    
+    except:
+        return 0
+
+
+def get_first_time_in_progress(issue):
+    try:
+        return (int(issue.fields.customfield_10804))
+    except:
+        return 0
