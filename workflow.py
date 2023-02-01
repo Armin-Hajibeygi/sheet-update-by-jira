@@ -355,23 +355,30 @@ def get_del_area(issue):
 
 def get_total_time_in_progress(issue):
     try:
-        start_date_str = issue.fields.customfield_10801
-        start_date = str_time_to_datetime(start_date_str)
+        check = int(issue.fields.customfield_10806)
+            
+        if ((check == 0) and (str(issue.fields.status) != "In-Progress") and (str(issue.fields.status) != "Unit Test")):
+            start_date_str = issue.fields.customfield_10801
+            start_date = str_time_to_datetime(start_date_str)
+            
+            end_date_str = issue.fields.customfield_10802
+            end_date = str_time_to_datetime(end_date_str)
+            
+            if (end_date > start_date):
+                diff = date_diff(start_date, end_date)
+                current_time = int(issue.fields.customfield_10803)
+                new_time = int(current_time + diff)
+                if (current_time == 0):
+                    issue.update(fields={'customfield_10804': new_time}) 
+            else:
+                new_time = int(issue.fields.customfield_10803)
+            
+            issue.update(fields={'customfield_10803': new_time})
+            issue.update(fields={'customfield_10806': 1})
         
-        end_date_str = issue.fields.customfield_10802
-        end_date = str_time_to_datetime(end_date_str)
-        
-        if (end_date > start_date):
-            diff = date_diff(start_date, end_date)
-            print(diff)
-            current_time = int(issue.fields.customfield_10803)
-            new_time = int(current_time + diff)
-            if (current_time == 0):
-                issue.update(fields={'customfield_10804': new_time}) 
         else:
             new_time = int(issue.fields.customfield_10803)
         
-        issue.update(fields={'customfield_10803': new_time})
         return new_time
     
     except:

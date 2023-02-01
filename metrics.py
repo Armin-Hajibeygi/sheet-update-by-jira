@@ -31,5 +31,5 @@ print("G-Sheet Connected")
 print("-----------------------------------------------")
 
 print("Start Updating Metrics ...")
-workflow.update_tickets(jira_connector, sheet_connector, "key", "developed_by", "estimate", "number_of_returns_from_review", "first_time_in_progress", "total_time_in_progress")
+workflow.update_tickets(jira_connector, sheet_connector, "key", "developed_by", "estimate", "number_of_returns_from_review", "total_time_in_progress", "first_time_in_progress")
 print("Metrics Updated ^^")
