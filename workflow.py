@@ -379,7 +379,7 @@ def get_total_time_in_progress(issue):
         else:
             new_time = int(issue.fields.customfield_10803)
         
-        return new_time
+        return (new_time / 60)
     
     except:
         return 0
@@ -387,6 +387,6 @@ def get_total_time_in_progress(issue):
 
 def get_first_time_in_progress(issue):
     try:
-        return (int(issue.fields.customfield_10804))
+        return ((int(issue.fields.customfield_10804)) / 60)
     except:
         return 0
