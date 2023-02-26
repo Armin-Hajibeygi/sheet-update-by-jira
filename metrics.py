@@ -1,7 +1,7 @@
-import workflow, os, csv
+import workflow, os, csv, const
 
-username = "armin.hajibeygi"
-password = "FaithBudgetWill137928!"
+username = const.USERNAME
+password = const.PASSWORD
 
 file = open('sheet_id.csv')
 csvreader = csv.reader(file)

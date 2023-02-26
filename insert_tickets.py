@@ -1,8 +1,8 @@
-import workflow, os, csv
+import workflow, os, csv, const
 import pandas as pd
 
-username = "armin.hajibeygi"
-password = "FaithBudgetWill137928!"
+username = const.USERNAME
+password = const.PASSWORD
 
 os.system('clear')
 
