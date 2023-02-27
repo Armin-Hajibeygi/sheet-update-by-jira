@@ -109,9 +109,14 @@ elif (update_type == 2):
 
     print("Start Updating FC ...")
     print("Updating Status")
-    workflow.update_field(jira_connector, sheet_connector, 9, "status")
+    workflow.update_field(jira_connector, sheet_connector, 10, "status")
     print("Updating Developer")
     workflow.update_field(jira_connector, sheet_connector, 5, "developed_by")
+    print("Updating Reviewer")
+    workflow.update_field(jira_connector, sheet_connector, 7, "review_by")
+    print("Updating Unit Test Estimate")
+    workflow.update_field(jira_connector, sheet_connector, 8, "review_estimate")
+    print("Front Updated ^^")
     print("FC Updated ^^")
 
     #print("-----------------------------------------------")
@@ -149,9 +154,13 @@ elif (update_type == 2):
 
     print("Start Updating Front ...")
     print("Updating Status")
-    workflow.update_field(jira_connector, sheet_connector, 9, "status")
+    workflow.update_field(jira_connector, sheet_connector, 10, "status")
     print("Updating Developer")
-    workflow.update_field(jira_connector, sheet_connector, 4, "developed_by")
+    workflow.update_field(jira_connector, sheet_connector, 5, "developed_by")
+    print("Updating Reviewer")
+    workflow.update_field(jira_connector, sheet_connector, 5, "review_by")
+    print("Updating Unit Test Estimate")
+    workflow.update_field(jira_connector, sheet_connector, 6, "review_estimate")
     print("Front Updated ^^")
 
     # print("-----------------------------------------------")
@@ -183,7 +192,7 @@ elif (update_type == 2):
 
     print("Start Updating Inventory ...")
     print("Updating Status")
-    workflow.update_field(jira_connector, sheet_connector, 9, "status")
+    workflow.update_field(jira_connector, sheet_connector, 10, "status")
     print("Updating Developer")
-    workflow.update_field(jira_connector, sheet_connector, 4, "developed_by")
+    workflow.update_field(jira_connector, sheet_connector, 5, "developed_by")
     print("Inventory Updated ^^")
