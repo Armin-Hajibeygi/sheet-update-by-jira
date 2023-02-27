@@ -36,13 +36,8 @@ if (update_type == 1):
     # workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "fc_area","developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
     # print("FC Updated ^^")
 
-<<<<<<< HEAD
-    # print("-----------------------------------------------")
+    print("-----------------------------------------------")
     print("... Connecting DEL ...")
-=======
-    #print("-----------------------------------------------")
-    #print("... Connecting DEL ...")
->>>>>>> bff1488 (Inventory Space Updated)
 
     #Update DEL
     #jira_connector = workflow.connect_jira(username, password)
@@ -94,7 +89,7 @@ if (update_type == 1):
     jira_connector = workflow.connect_jira(username, password)
     print("Jira Connected")
 
-    sheet_connector = workflow.connect_sheet("[FC] Inventory", inventory_id)
+    sheet_connector = workflow.connect_sheet("Inventory", inventory_id)
     print("G-Sheet Connected")
     print("-----------------------------------------------")
 
@@ -182,7 +177,7 @@ elif (update_type == 2):
     jira_connector = workflow.connect_jira(username, password)
     print("Jira Connected")
 
-    sheet_connector = workflow.connect_sheet("[FC] Inventory", inventory_id)
+    sheet_connector = workflow.connect_sheet("Inventory", inventory_id)
     print("G-Sheet Connected")
     print("-----------------------------------------------")
 

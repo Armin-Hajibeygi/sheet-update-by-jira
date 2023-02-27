@@ -57,8 +57,8 @@ elif squad == 4:
     sheet_connector = workflow.connect_sheet("[Platform] Sprints", platform_id)
     jql = 'project =Platform AND status in ("DX Sprint Backlog", "SRE Sprint Backlog", "SN Sprint Backlog", "Infrastructure Sprint Backlog") AND Sprint in openSprints() ORDER BY priority DESC, cf[10201] ASC'
     workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "step", "assignee","epic", "estimate", "impact", "status") 
-lif squad == 5:
-    sheet_connector = workflow.connect_sheet("[FC] Inventory", inventory_id)
+elif squad == 5:
+    sheet_connector = workflow.connect_sheet(" Inventory", inventory_id)
     jql = 'project = DKFC AND Sprint in openSprints() AND  (status = "Sprint Backlog" OR status = In-Progress) AND Side = Back-End ORDER BY priority DESC, cf[10201] ASC'
     workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "epic","fc_area", "developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
 
