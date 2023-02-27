@@ -14,6 +14,7 @@ del_id = int(sheet_ids["DEL"])
 front_id = int(sheet_ids["Front"])
 platform_id = int(sheet_ids["Plat"])
 dsh_id = int(sheet_ids["DSH"])
+inventory_id = int(sheet_ids["Inventory"])
 
 file.close()
 
@@ -35,20 +36,25 @@ if (update_type == 1):
     # workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "fc_area","developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
     # print("FC Updated ^^")
 
+<<<<<<< HEAD
     # print("-----------------------------------------------")
     print("... Connecting DEL ...")
+=======
+    #print("-----------------------------------------------")
+    #print("... Connecting DEL ...")
+>>>>>>> bff1488 (Inventory Space Updated)
 
     #Update DEL
-    jira_connector = workflow.connect_jira(username, password)
-    print("Jira Connected")
+    #jira_connector = workflow.connect_jira(username, password)
+    #print("Jira Connected")
 
-    sheet_connector = workflow.connect_sheet("[DEL] Sprints - All", del_id)
-    print("G-Sheet Connected")
-    print("-----------------------------------------------")
+    #sheet_connector = workflow.connect_sheet("[DEL] Sprints - All", del_id)
+    #print("G-Sheet Connected")
+    #print("-----------------------------------------------")
 
-    print("Start Updating DEL ...")
-    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "del_area", "developed_by", "estimate", "unit_test_estimate", "review_by", "impact", "status")
-    print("DEL Updated ^^")
+    #print("Start Updating DEL ...")
+    #workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "epic", "del_area", "developed_by", "estimate", "unit_test_estimate", "review_by", "impact", "status")
+    #print("DEL Updated ^^")
 
     # print("-----------------------------------------------")
     # print("... Connecting Front ...")
@@ -81,6 +87,21 @@ if (update_type == 1):
     # print("Platform Updated ^^")
 
 
+    print("-----------------------------------------------")
+    print("... Connecting Inventory ...")
+
+    #Update Inventory
+    jira_connector = workflow.connect_jira(username, password)
+    print("Jira Connected")
+
+    sheet_connector = workflow.connect_sheet("[FC] Inventory", inventory_id)
+    print("G-Sheet Connected")
+    print("-----------------------------------------------")
+
+    print("Start Updating Inventory ...")
+    workflow.update_tickets(jira_connector, sheet_connector, "key", "summary", "side", "epic", "developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
+    print("Inventory Updated ^^")
+
 elif (update_type == 2):
     print("... Connecting FC ...")
     #Update FC
@@ -98,30 +119,30 @@ elif (update_type == 2):
     workflow.update_field(jira_connector, sheet_connector, 5, "developed_by")
     print("FC Updated ^^")
 
-    print("-----------------------------------------------")
-    print("... Connecting DEL ...")
+    #print("-----------------------------------------------")
+    #print("... Connecting DEL ...")
 
     #Update DEL
-    jira_connector = workflow.connect_jira(username, password)
-    print("Jira Connected")
+    #jira_connector = workflow.connect_jira(username, password)
+    #print("Jira Connected")
 
-    sheet_connector = workflow.connect_sheet("[DEL] Sprints - All", del_id)
-    print("G-Sheet Connected")
-    print("-----------------------------------------------")
+    #sheet_connector = workflow.connect_sheet("[DEL] Sprints - All", del_id)
+    #print("G-Sheet Connected")
+    #print("-----------------------------------------------")
 
-    print("Start Updating DEL ...")
-    print("Updating Status")
-    workflow.update_field(jira_connector, sheet_connector, 10, "status")
-    print("Updating Developer")
-    workflow.update_field(jira_connector, sheet_connector, 5, "developed_by")
-    print("Updating Review")
-    workflow.update_field(jira_connector, sheet_connector, 8, "review_by")
-    print("Updating Unit Test Estimate")
-    workflow.update_field(jira_connector, sheet_connector, 7, "unit_test_estimate")
-    print("DEL Updated ^^")
+    #print("Start Updating DEL ...")
+    #print("Updating Status")
+    #workflow.update_field(jira_connector, sheet_connector, 10, "status")
+    #print("Updating Developer")
+    #workflow.update_field(jira_connector, sheet_connector, 5, "developed_by")
+    #print("Updating Review")
+    #workflow.update_field(jira_connector, sheet_connector, 8, "review_by")
+    #print("Updating Unit Test Estimate")
+    #workflow.update_field(jira_connector, sheet_connector, 7, "unit_test_estimate")
+    #print("DEL Updated ^^")
 
-    print("-----------------------------------------------")
-    print("... Connecting Front ...")
+    #print("-----------------------------------------------")
+    #print("... Connecting Front ...")
 
     #Update Front
     jira_connector = workflow.connect_jira(username, password)
@@ -154,3 +175,20 @@ elif (update_type == 2):
     # print("Updating Developer")
     # workflow.update_field(jira_connector, sheet_connector, 4, "assignee")
     # print("Platform Updated ^^")
+
+    print("-----------------------------------------------")
+    print("... Connecting Inventory ...")
+    #Update Inventory
+    jira_connector = workflow.connect_jira(username, password)
+    print("Jira Connected")
+
+    sheet_connector = workflow.connect_sheet("[FC] Inventory", inventory_id)
+    print("G-Sheet Connected")
+    print("-----------------------------------------------")
+
+    print("Start Updating Inventory ...")
+    print("Updating Status")
+    workflow.update_field(jira_connector, sheet_connector, 9, "status")
+    print("Updating Developer")
+    workflow.update_field(jira_connector, sheet_connector, 4, "developed_by")
+    print("Inventory Updated ^^")

@@ -14,7 +14,7 @@ del_id = int(sheet_ids["DEL"])
 front_id = int(sheet_ids["Front"])
 platform_id = int(sheet_ids["Plat"])
 dsh_id = int(sheet_ids["DSH"])
-del_metric_id = int(sheet_ids["DEL_METRIC"])
+fc_metric_id = int(sheet_ids["FC_METRIC"])
 
 file.close()
 
@@ -26,7 +26,7 @@ input("Please Update the Sheet ID")
 jira_connector = workflow.connect_jira(username, password)
 print("Jira Connected")
 
-sheet_connector = workflow.connect_sheet("[DEL] Metrics", del_metric_id)
+sheet_connector = workflow.connect_sheet("[FC] Metrics", fc_metric_id)
 print("G-Sheet Connected")
 print("-----------------------------------------------")
 
