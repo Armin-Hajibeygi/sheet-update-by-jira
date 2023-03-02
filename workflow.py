@@ -1,11 +1,11 @@
-import googleSheet
+import googleSheet, const
 from jira import JIRA
 import datetime
 
 
 def connect_jira(username, password):
     jira_connector = JIRA(basic_auth=(username, password), options={
-                          'server': 'https://dkjira.digikala.com'})
+                          'server': const.SERVER})
     return jira_connector
 
 
