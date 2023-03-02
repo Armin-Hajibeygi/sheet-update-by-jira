@@ -4,7 +4,8 @@ import datetime
 
 
 def connect_jira(username, password):
-    jira_connector = JIRA (basic_auth=(username, password), options={'server':'https://dkjira.digikala.com'})
+    jira_connector = JIRA(basic_auth=(username, password), options={
+                          'server': 'https://dkjira.digikala.com'})
     return jira_connector
 
 
@@ -19,7 +20,7 @@ def str_time_to_datetime(complete_date):
     hour = int(complete_date[11:13])
     minutes = int(complete_date[14:16])
     time = datetime.datetime(year, month, day, hour, minutes)
-    
+
     return time
 
 
@@ -66,14 +67,14 @@ def get_attr(issue, attr, jira):
     elif attr == "first_time_in_progress":
         return get_first_time_in_progress(issue)
 
-    
+
 def get_ticket(jira, sheet_connector, jql, *args):
     issues = jira.search_issues(jql, maxResults=500)
     print(f"Number of tickets: {len(issues)}")
-    
+
     for index, issue in enumerate(issues):
         print(f"Remaining: {len(issues) - index}")
-        
+
         ticket = [get_attr(issue, attr, jira) for attr in args]
         insert_issues(ticket, sheet_connector, index, 0)
 
@@ -82,7 +83,7 @@ def update_tickets(jira, sheet_connector, *args):
     sheet_tickets, remaining_tickets = sheet_connector.get_sheet_tickets()
 
     for index, ticket in enumerate(sheet_tickets):
-        jql = "key = " + ticket 
+        jql = "key = " + ticket
 
         remaining_tickets -= 1
         print(f"Remaining: {remaining_tickets}")
@@ -98,7 +99,7 @@ def update_field(jira, sheet_connector, column, field):
     index = 0
 
     for ticket in sheet_tickets:
-        jql = "key = " + ticket 
+        jql = "key = " + ticket
 
         remaining_tickets -= 1
         print(f"Remaining: {remaining_tickets}")
@@ -133,17 +134,16 @@ def update_field(jira, sheet_connector, column, field):
             elif (field == "number_of_returns_from_review"):
                 ticket_field = get_number_of_returns_from_review(issue)
             elif (field == "fc_area"):
-                    ticket.append(get_fc_area(issue))
+                ticket.append(get_fc_area(issue))
             elif (field == "del_area"):
-                    ticket.append(get_del_area(issue))
+                ticket.append(get_del_area(issue))
             elif (field == "total_time_in_progress"):
-                    ticket.append(get_total_time_in_progress(issue))
+                ticket.append(get_total_time_in_progress(issue))
             elif (field == "first_time_in_progress"):
-                    ticket.append(get_first_time_in_progress(issue))
-            
+                ticket.append(get_first_time_in_progress(issue))
 
             sheet_connector.update_field(index+2, column, ticket_field)
-        
+
         index += 1
 
 
@@ -161,7 +161,7 @@ def get_summary(issue):
     return summary
 
 
-#TODO remove jira or add a search function
+# TODO remove jira or add a search function
 def get_epic(jira, issue):
     epic_jql = "key = " + str(issue.fields.customfield_10102)
     try:
@@ -169,7 +169,7 @@ def get_epic(jira, issue):
         epic_name = epic[0].fields.customfield_10104
     except:
         epic_name = ""
-    
+
     return epic_name
 
 
@@ -245,16 +245,16 @@ def get_side(issue):
 
 def get_step(issue):
     issue_side = issue.fields.customfield_10531.value
-    
+
     return issue_side
-    
+
 
 def get_assignee(issue):
     try:
         assignee = issue.fields.assignee.name
     except:
         assignee = ""
-    
+
     return assignee
 
 
@@ -274,14 +274,14 @@ def get_number_of_returns_from_review(issue):
         return (int(issue.fields.customfield_10752))
     except:
         return 0
-   
-    
+
+
 def get_fc_area(issue):
     try:
         fc_area = str(issue.fields.customfield_10770)
     except:
         fc_area = ""
-        
+
     return fc_area
 
 
@@ -290,38 +290,38 @@ def get_del_area(issue):
         del_area = str(issue.fields.customfield_10773)
     except:
         del_area = ""
-        
+
     return del_area
 
 
 def get_total_time_in_progress(issue):
     try:
         check = int(issue.fields.customfield_10806)
-            
+
         if ((check == 0) and (str(issue.fields.status) != "In-Progress") and (str(issue.fields.status) != "Unit Test")):
             start_date_str = issue.fields.customfield_10801
             start_date = str_time_to_datetime(start_date_str)
-            
+
             end_date_str = issue.fields.customfield_10802
             end_date = str_time_to_datetime(end_date_str)
-            
+
             if (end_date > start_date):
                 diff = date_diff(start_date, end_date)
                 current_time = int(issue.fields.customfield_10803)
                 new_time = int(current_time + diff)
                 if (current_time == 0):
-                    issue.update(fields={'customfield_10804': new_time}) 
+                    issue.update(fields={'customfield_10804': new_time})
             else:
                 new_time = int(issue.fields.customfield_10803)
-            
+
             issue.update(fields={'customfield_10803': new_time})
             issue.update(fields={'customfield_10806': 1})
-        
+
         else:
             new_time = int(issue.fields.customfield_10803)
-        
+
         return (new_time / 60)
-    
+
     except:
         return 0
 
