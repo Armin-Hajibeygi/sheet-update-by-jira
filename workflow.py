@@ -105,43 +105,7 @@ def update_field(jira, sheet_connector, column, field):
         print(f"Remaining: {remaining_tickets}")
 
         for issue in jira.search_issues(jql):
-            if (field == "key"):
-                ticket_field = get_key(issue)
-            elif (field == "summary"):
-                ticket_field = get_summary(issue)
-            elif (field == "epic"):
-                ticket_field = get_epic(jira, issue)
-            elif (field == "status"):
-                ticket_field = get_status(issue)
-            elif (field == "developed_by"):
-                ticket_field = get_developed_by(issue)
-            elif (field == "impact"):
-                ticket_field = get_impact(issue)
-            elif (field == "estimate"):
-                ticket_field = get_estimate(issue)
-            elif (field == "review_by"):
-                ticket_field = get_reviewed_by(issue)
-            elif (field == "review_estimate"):
-                ticket_field = get_review_estimate(issue)
-            elif (field == "side"):
-                ticket_field = get_side(issue)
-            elif (field == "step"):
-                ticket_field = get_step(issue)
-            elif (field == "assignee"):
-                ticket_field = get_assignee(issue)
-            elif (field == "unit_test_estimate"):
-                ticket_field = get_unit_test_estimate(issue)
-            elif (field == "number_of_returns_from_review"):
-                ticket_field = get_number_of_returns_from_review(issue)
-            elif (field == "fc_area"):
-                ticket.append(get_fc_area(issue))
-            elif (field == "del_area"):
-                ticket.append(get_del_area(issue))
-            elif (field == "total_time_in_progress"):
-                ticket.append(get_total_time_in_progress(issue))
-            elif (field == "first_time_in_progress"):
-                ticket.append(get_first_time_in_progress(issue))
-
+            ticket_field = get_attr(issue, field, jira)
             sheet_connector.update_field(index+2, column, ticket_field)
 
         index += 1
