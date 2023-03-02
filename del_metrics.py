@@ -3,15 +3,10 @@ import workflow, os, csv, const
 username = const.USERNAME
 password = const.PASSWORD
 
-file = open('sheet_id.csv')
-csvreader = csv.reader(file)
-sheet_ids = dict()
-for row in csvreader:
-    sheet_ids[row[0]] = row[1]
+with open('sheet_id.csv') as f:
+    sheet_ids = dict(csv.reader(f))
 
-del_metric_id = int(sheet_ids["DEL_METRIC"])
-
-file.close()
+del_metric_id = int(sheet_ids.get("DEL_METRIC", 0))
 
 os.system('clear')
 
