@@ -23,18 +23,6 @@ def str_time_to_datetime(complete_date):
     return time
 
 
-# def date_diff_in_working_hours(date1, date2):
-#     diff = date2 - date1
-#     working_days = 0
-#     while diff >= datetime.timedelta(hours=8):
-#         diff -= datetime.timedelta(days=1)
-#         if (date1.weekday() < 5):
-#             working_days += 1
-#         date1 += datetime.timedelta(days=1)
-#     working_hours = working_days * 8
-#     return working_hours
-
-
 def date_diff(start_date, end_date):
     diff = end_date - start_date
     return int(diff.total_seconds() // 60)
