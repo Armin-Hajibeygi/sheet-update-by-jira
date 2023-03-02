@@ -74,45 +74,7 @@ def get_ticket(jira, sheet_connector, jql, *args):
     for index, issue in enumerate(issues):
         print(f"Remaining: {len(issues) - index}")
         
-        ticket = []
-        for attr in args:
-            if attr == "key":
-                ticket.append(get_key(issue))
-            elif attr == "summary":
-                ticket.append(get_summary(issue))
-            elif attr == "epic":
-                ticket.append(get_epic(jira, issue))
-            elif attr == "status":
-                ticket.append(get_status(issue))
-            elif attr == "developed_by":
-                ticket.append(get_developed_by(issue))
-            elif attr == "impact":
-                ticket.append(get_impact(issue))
-            elif attr == "estimate":
-                ticket.append(get_estimate(issue))
-            elif attr == "review_by":
-                ticket.append(get_reviewed_by(issue))
-            elif attr == "review_estimate":
-                ticket.append(get_review_estimate(issue))
-            elif attr == "side":
-                ticket.append(get_side(issue))
-            elif attr == "step":
-                ticket.append(get_step(issue))
-            elif attr == "assignee":
-                ticket.append(get_assignee(issue))
-            elif attr == "unit_test_estimate":
-                ticket.append(get_unit_test_estimate(issue))
-            elif attr == "number_of_returns_from_review":
-                ticket.append(get_number_of_returns_from_review(issue))
-            elif attr == "fc_area":
-                ticket.append(get_fc_area(issue))
-            elif attr == "del_area":
-                ticket.append(get_del_area(issue))
-            elif attr == "total_time_in_progress":
-                ticket.append(get_total_time_in_progress(issue))
-            elif attr == "first_time_in_progress":
-                ticket.append(get_first_time_in_progress(issue))
-        
+        ticket = [get_attr(issue, attr, jira) for attr in args]
         insert_issues(ticket, sheet_connector, index, 0)
 
 
