@@ -45,7 +45,7 @@ def get_ticket(jira, sheet_connector, jql, *args):
     print(f"Number of tickets: {len(issues)}")
     
     for index, issue in enumerate(issues):
-        print(f"Remaining: {len(issues) - index - 1}")
+        print(f"Remaining: {len(issues) - index}")
         
         ticket = []
         for attr in args:
