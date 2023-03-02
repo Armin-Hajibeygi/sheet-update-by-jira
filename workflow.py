@@ -81,56 +81,15 @@ def get_ticket(jira, sheet_connector, jql, *args):
 def update_tickets(jira, sheet_connector, *args):
     sheet_tickets, remaining_tickets = sheet_connector.get_sheet_tickets()
 
-    index = 0
-
-    for ticket in sheet_tickets:
+    for index, ticket in enumerate(sheet_tickets):
         jql = "key = " + ticket 
 
         remaining_tickets -= 1
         print(f"Remaining: {remaining_tickets}")
 
         for issue in jira.search_issues(jql):
-            ticket = list()
-            for attr in range(len(args)):
-                if (args[attr] == "key"):
-                    ticket.append(get_key(issue))
-                elif (args[attr] == "summary"):
-                    ticket.append(get_summary(issue))
-                elif (args[attr] == "epic"):
-                    ticket.append(get_epic(jira, issue))
-                elif (args[attr] == "status"):
-                    ticket.append(get_status(issue))
-                elif (args[attr] == "developed_by"):
-                    ticket.append(get_developed_by(issue))
-                elif (args[attr] == "impact"):
-                    ticket.append(get_impact(issue))
-                elif (args[attr] == "estimate"):
-                    ticket.append(get_estimate(issue))
-                elif (args[attr] == "review_by"):
-                    ticket.append(get_reviewed_by(issue))
-                elif (args[attr] == "review_estimate"):
-                    ticket.append(get_review_estimate(issue))
-                elif (args[attr] == "side"):
-                    ticket.append(get_side(issue))
-                elif (args[attr] == "step"):
-                    ticket.append(get_step(issue))
-                elif (args[attr] == "assignee"):
-                    ticket.append(get_assignee(issue))
-                elif (args[attr] == "unit_test_estimate"):
-                    ticket.append(get_unit_test_estimate(issue))
-                elif (args[attr] == "number_of_returns_from_review"):
-                    ticket.append(get_number_of_returns_from_review(issue))
-                elif (args[attr] == "fc_area"):
-                    ticket.append(get_fc_area(issue))
-                elif (args[attr] == "del_area"):
-                    ticket.append(get_del_area(issue))
-                elif (args[attr] == "total_time_in_progress"):
-                    ticket.append(get_total_time_in_progress(issue))
-                elif (args[attr] == "first_time_in_progress"):
-                    ticket.append(get_first_time_in_progress(issue))
-
-        insert_issues(ticket[1:], sheet_connector, index, 1)
-        index += 1
+            ticket = [get_attr(issue, attr, jira) for attr in args]
+            insert_issues(ticket[1:], sheet_connector, index, 1)
 
 
 def update_field(jira, sheet_connector, column, field):
