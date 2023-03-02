@@ -22,7 +22,7 @@ os.system('clear')
 
 input("Please Update the Sheet ID")
 
-#Update DEL
+#Update FC_Metric
 jira_connector = workflow.connect_jira(username, password)
 print("Jira Connected")
 
