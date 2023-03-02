@@ -27,6 +27,45 @@ def date_diff(start_date, end_date):
     diff = end_date - start_date
     return int(diff.total_seconds() // 60)
 
+
+def get_attr(issue, attr, jira):
+    if attr == "key":
+        return get_key(issue)
+    elif attr == "summary":
+        return get_summary(issue)
+    elif attr == "epic":
+        return get_epic(jira, issue)
+    elif attr == "status":
+        return get_status(issue)
+    elif attr == "developed_by":
+        return get_developed_by(issue)
+    elif attr == "impact":
+        return get_impact(issue)
+    elif attr == "estimate":
+        return get_estimate(issue)
+    elif attr == "review_by":
+        return get_reviewed_by(issue)
+    elif attr == "review_estimate":
+        return get_review_estimate(issue)
+    elif attr == "side":
+        return get_side(issue)
+    elif attr == "step":
+        return get_step(issue)
+    elif attr == "assignee":
+        return get_assignee(issue)
+    elif attr == "unit_test_estimate":
+        return get_unit_test_estimate(issue)
+    elif attr == "number_of_returns_from_review":
+        return get_number_of_returns_from_review(issue)
+    elif attr == "fc_area":
+        return get_fc_area(issue)
+    elif attr == "del_area":
+        return get_del_area(issue)
+    elif attr == "total_time_in_progress":
+        return get_total_time_in_progress(issue)
+    elif attr == "first_time_in_progress":
+        return get_first_time_in_progress(issue)
+
     
 def get_ticket(jira, sheet_connector, jql, *args):
     issues = jira.search_issues(jql, maxResults=500)
