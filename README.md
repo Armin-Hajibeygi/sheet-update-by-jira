@@ -16,7 +16,8 @@ Google account with API access
 Google Sheets API enabled
 ```
 
-## Create a const.py file then add your Jira configurations:
+## How to use:
+Create a const.py file then add your Jira configurations like below:
 ``` 
 USERNAME = "***"
 PASSWORD = "***"
