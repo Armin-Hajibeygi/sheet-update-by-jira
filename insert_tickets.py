@@ -6,21 +6,21 @@ password = const.PASSWORD
 
 os.system('clear')
 
-squad = int(input("Choose Squad: \n 1.DEL \n 2.FC \n 3.Front \n 4.Plat \n 5.Inventory \n"))
+# Create a dictionary to map squad numbers to row indexes
+#FC:0, DEL:1, Front:3, Plat:4, Inventory:5
+squad_dict = {1:0, 2:1, 3:2, 4:3, 5:4}
+
+# Get user inputs
+squad = int(input("Choose Squad: \n 1.FC \n 2.DEL \n 3.Front \n 4.Plat \n 5.Inventory \n"))
 sheet_id = int(input("Please Enter Sheet ID \n"))
 
+# Load the CSV file into a DataFrame
 df = pd.read_csv("sheet_id.csv")
-if squad == 1:  
-    df.loc[1, 'sheet_id'] = sheet_id
-elif squad == 2:
-    df.loc[0, 'sheet_id'] = sheet_id
-elif squad == 3:
-    df.loc[2, 'sheet_id'] = sheet_id
-elif squad == 4:
-    df.loc[3, 'sheet_id'] = sheet_id
-elif squad == 5:
-    df.loc[4, 'sheet_id'] = sheet_id
 
+# Update the DataFrame with the new sheet ID
+df.loc[squad_dict[squad], 'sheet_id'] = sheet_id
+
+# Save the updated DataFrame to the CSV file
 df.to_csv("sheet_id.csv", index=False)
 
 file = open('sheet_id.csv')
@@ -41,14 +41,14 @@ jira_connector = workflow.connect_jira(username, password)
 print("Jira Connected")
 
 if squad == 1:
+    sheet_connector = workflow.connect_sheet("[FC] Sprints - 01", fc_id)
+    jql = 'project = DKFC AND Sprint in openSprints() AND  (status = "Sprint Backlog" OR status = In-Progress) AND Side = Back-End ORDER BY priority DESC, cf[10201] ASC'
+    workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "epic","fc_area", "developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
+elif squad == 2:
     sheet_connector = workflow.connect_sheet("[DEL] Sprints - All", del_id)
     print("G-Sheet Connected")
     jql = 'project = LG AND Sprint in openSprints() AND  (status = "Sprint Backlog" OR status = In-Progress) AND Side = Back-End ORDER BY priority DESC, cf[10201] ASC'
     workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "epic", "del_area", "developed_by", "estimate", "unit_test_estimate", "review_by", "impact", "status") 
-elif squad == 2:
-    sheet_connector = workflow.connect_sheet("[FC] Sprints - 01", fc_id)
-    jql = 'project = DKFC AND Sprint in openSprints() AND  (status = "Sprint Backlog" OR status = In-Progress) AND Side = Back-End ORDER BY priority DESC, cf[10201] ASC'
-    workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "epic","fc_area", "developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
 elif squad == 3:
     sheet_connector = workflow.connect_sheet("[OPS] Front Sprints - 01", front_id)
     jql = '(project = DKFC OR project = Delivery) AND  Sprint in openSprints() AND  (status = "Sprint Backlog" OR status = In-Progress) AND Side = Front-End ORDER BY priority DESC, cf[10201] ASC'
