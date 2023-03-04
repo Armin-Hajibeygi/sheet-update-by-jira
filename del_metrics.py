@@ -1,4 +1,7 @@
-import workflow, os, csv, const
+import workflow
+import os
+import csv
+import const
 
 username = const.USERNAME
 password = const.PASSWORD
@@ -12,7 +15,7 @@ os.system('clear')
 
 input("Please Update the Sheet ID")
 
-#Update DEL_Metric
+# Update DEL_Metric
 jira_connector = workflow.connect_jira(username, password)
 print("Jira Connected")
 
@@ -21,5 +24,6 @@ print("G-Sheet Connected")
 print("-----------------------------------------------")
 
 print("Start Updating Metrics ...")
-workflow.update_tickets(jira_connector, sheet_connector, "key", "developed_by", "estimate", "number_of_returns_from_review", "total_time_in_progress", "first_time_in_progress")
+workflow.update_tickets(jira_connector, sheet_connector, "key", "developed_by", "estimate",
+                        "number_of_returns_from_review", "total_time_in_progress", "first_time_in_progress")
 print("Metrics Updated ^^")
