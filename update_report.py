@@ -14,7 +14,7 @@ print("... Connecting FC ...")
 jira_connector = workflow.connect_jira(username, password)
 print("Jira Connected")
 
-sheet_connector = workflow.connect_sheet("[FC] Sprints - 01", sheet_ids["FC"])
+sheet_connector = workflow.connect_sheet("[FC] Sprints - 01", int(sheet_ids["FC"]))
 print("G-Sheet Connected")
 print("-----------------------------------------------")
 
@@ -29,7 +29,7 @@ print("... Connecting DEL ...")
 jira_connector = workflow.connect_jira(username, password)
 print("Jira Connected")
 
-sheet_connector = workflow.connect_sheet("[DEL] Sprints - All", sheet_ids["DEL"])
+sheet_connector = workflow.connect_sheet("[DEL] Sprints - All", int(sheet_ids["DEL"]))
 print("G-Sheet Connected")
 print("-----------------------------------------------")
 
@@ -44,7 +44,7 @@ print("... Connecting Front ...")
 jira_connector = workflow.connect_jira(username, password)
 print("Jira Connected")
 
-sheet_connector = workflow.connect_sheet("[OPS] Front Sprints - 01", sheet_ids["FRONT"])
+sheet_connector = workflow.connect_sheet("[OPS] Front Sprints - 01", int(sheet_ids["FRONT"]))
 print("G-Sheet Connected")
 print("-----------------------------------------------")
 
@@ -59,7 +59,7 @@ print("... Connecting Inventory ...")
 jira_connector = workflow.connect_jira(username, password)
 print("Jira Connected")
 
-sheet_connector = workflow.connect_sheet("Inventory", sheet_ids["Inventory"])
+sheet_connector = workflow.connect_sheet("Inventory", int(sheet_ids["Inventory"]))
 print("G-Sheet Connected")
 print("-----------------------------------------------")
 
