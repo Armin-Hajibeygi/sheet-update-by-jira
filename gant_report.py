@@ -27,4 +27,5 @@ for issue in jira.search_issues(jql, maxResults=500):
                 project = project.append(action, ignore_index=True)
 
 os.system('clear')
+project = project.drop_duplicates('date', keep='last')
 print(project.head(5))
