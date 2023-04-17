@@ -18,9 +18,8 @@ project = pd.DataFrame(columns=['issue', 'date', 'action_by', 'from', 'to'])
 
 for issue in jira.search_issues(jql, maxResults=500):
     changelog = jira.issue(str(issue.key), expand='changelog').changelog
-
     action = {'issue': str(issue.key), 'date': datetime.strptime(
-                    issue.fields.created[:10], '%Y-%M-%d').date(), 'action_by': issue.fields.reporter, 'from': "", 'to': ""}
+                    issue.fields.created[:10], '%Y-%M-%d').date(), 'action_by': issue.fields.reporter.displayName, 'from': "", 'to': ""}
     project = project.append(action, ignore_index=True)
     
     for history in changelog.histories:
