@@ -11,7 +11,7 @@ password = const.PASSWORD
 
 jira = JIRA(basic_auth=(username, password), options={
             'server': 'https://dkjira.digikala.com'})
-jql = 'project = LG AND "Epic Link" = LG-3093'
+jql = '"Epic Link" = DKFC-11482'
 
 os.system('clear')
 
@@ -29,12 +29,13 @@ for issue in jira.search_issues(jql, maxResults=500):
                 action = {'issue': str(issue.key), 'start': datetime.strptime(
                     history.created[:19], '%Y-%m-%dT%H:%M:%S'), 'action_by': history.author, 'from': item.fromString, 'to': item.toString}
                 project = project.append(action, ignore_index=True)
-
-#os.system('clear')
+                
+    action = {'issue': str(issue.key), 'start': datetime.now(), 'action_by': issue.fields.reporter.displayName, 'from': "", 'to': str(issue.fields.status)}
+    project = project.append(action, ignore_index=True)
+    
+os.system('clear')
 #project = project.drop_duplicates(['issue', 'start'], keep='last')
 project.sort_values(by=['issue', 'start']).reset_index(drop=True)
-
-#print(project.head(10))
 
 for i in range(0, len(project)-1):
     project.loc[i, 'end'] = project.loc[i+1, 'start']
