@@ -3,3 +3,4 @@ const.py
 test.py
 client_secret.json
 env
+*.html
