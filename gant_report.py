@@ -27,9 +27,8 @@ for issue in jira.search_issues(jql, maxResults=500):
         for item in history.items:
             if item.field == 'status':
                 action = {'issue': str(issue.key), 'start': datetime.strptime(
-                    history.created[:10], '%Y-%M-%d').date(), 'action_by': history.author, 'from': item.fromString, 'to': item.toString}
+                    history.created[:19], '%Y-%m-%dT%H:%M:%S'), 'action_by': history.author, 'from': item.fromString, 'to': item.toString}
                 project = project.append(action, ignore_index=True)
-                #print(history.created)
 
 os.system('clear')
 #project = project.drop_duplicates(['issue', 'start'], keep='last')
