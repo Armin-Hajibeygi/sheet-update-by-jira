@@ -12,7 +12,7 @@ password = const.PASSWORD
 jira = JIRA(basic_auth=(username, password), options={
                           'server': const.SERVER})
 
-project_epic = 'DKFC-11167'
+project_epic = 'DKFC-11516'
 jql = '"Epic Link" = ' + project_epic
 
 epic_jql = "key = " + project_epic
@@ -58,4 +58,4 @@ fig = px.timeline(project, x_start='start', x_end='end', y='issue', color='statu
 # show figure
 epic_name = epic_name.replace(' ', '-')
 fig_address = epic_name + '.html'
-fig.write_html(fig_address, auto_open=True)
+fig.write_html('reports/' + fig_address, auto_open=True)
