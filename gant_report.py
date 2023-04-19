@@ -34,9 +34,10 @@ for issue in jira.search_issues(jql, maxResults=500):
                 action = {'issue': str(issue.key), 'start': datetime.strptime(
                     history.created[:19], '%Y-%m-%dT%H:%M:%S'), 'action_by': history.author, 'from': item.fromString, 'to': item.toString}
                 project = project.append(action, ignore_index=True)
-                
-    action = {'issue': str(issue.key), 'start': datetime.now(), 'action_by': issue.fields.reporter.displayName, 'from': "", 'to': str(issue.fields.status)}
-    project = project.append(action, ignore_index=True)
+    
+    if ((str(issue.fields.status) != 'Done') and (str(issue.fields.status) != 'Invalid')):            
+        action = {'issue': str(issue.key), 'start': datetime.now(), 'action_by': issue.fields.reporter.displayName, 'from': "", 'to': str(issue.fields.status)}
+        project = project.append(action, ignore_index=True)
     
 os.system('clear')
 #project = project.drop_duplicates(['issue', 'start'], keep='last')
