@@ -23,3 +23,5 @@ SERVER = 'Your Jira Server'
 USERNAME = "Your Jira Username"
 PASSWORD = "Your Jira Password"
 ```
+
+### If you want to create reports, create a ```reports``` folder in your directory.
