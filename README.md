@@ -17,7 +17,7 @@ Google Sheets API enabled
 ```
 
 ## How to use:
-Create a const.py file then add your Jira configurations like below:
+Create a ```const.py``` file then add your Jira configurations like below:
 ``` 
 SERVER = 'Your Jira Server'
 USERNAME = "Your Jira Username"
