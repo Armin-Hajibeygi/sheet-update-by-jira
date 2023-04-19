@@ -11,7 +11,12 @@ password = const.PASSWORD
 
 jira = JIRA(basic_auth=(username, password), options={
             'server': 'https://dkjira.digikala.com'})
-jql = '"Epic Link" = DKFC-11482'
+project_epic = 'DKFC-11167'
+jql = '"Epic Link" = ' + project_epic
+
+epic_jql = "key = " + project_epic
+epic = jira.search_issues(epic_jql)
+epic_name = epic[0].fields.customfield_10104
 
 os.system('clear')
 
@@ -41,7 +46,11 @@ for i in range(0, len(project)-1):
     if (project.loc[i, 'issue'] == project.loc[i+1, 'issue']):
         project.loc[i, 'end'] = project.loc[i+1, 'start']
 
-fig = px.timeline(project, x_start='start', x_end='end', y='issue', color='to' ,title='Gantt Chart')
+fig = px.timeline(project, x_start='start', x_end='end', y='issue', color='to' ,title=(epic_name + ' - Total Number of Tickets:' + str(len(project['issue'].unique()))))
+
+#fig.update_yaxes(visible=False, showticklabels=False)
 
 # show figure
-fig.write_html('gantt-chart.html', auto_open=True)
+epic_name = epic_name.replace(' ', '-')
+fig_address = epic_name + '.html'
+fig.write_html(fig_address, auto_open=True)
