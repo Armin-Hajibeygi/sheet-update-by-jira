@@ -1,7 +1,6 @@
 from jira import JIRA
 import os
 import const
-import pandas as pd
 from datetime import datetime
 import plotly.express as px
 import pandas as pd
@@ -18,8 +17,6 @@ jql = '"Epic Link" = ' + project_epic
 epic_jql = "key = " + project_epic
 epic = jira.search_issues(epic_jql)
 epic_name = epic[0].fields.customfield_10104
-
-os.system('clear')
 
 project = pd.DataFrame(
     columns=['issue', 'start', 'action_by', 'from', 'status'])
@@ -43,7 +40,6 @@ for issue in jira.search_issues(jql, maxResults=500):
         project = project.append(action, ignore_index=True)
 
 os.system('clear')
-# project = project.drop_duplicates(['issue', 'start'], keep='last')
 project.sort_values(by=['issue', 'start']).reset_index(drop=True)
 
 for i in range(0, len(project)-1):
@@ -55,7 +51,6 @@ fig = px.timeline(project, x_start='start', x_end='end', y='issue', color='statu
 
 # fig.update_yaxes(visible=False, showticklabels=False)
 
-# show figure
 epic_name = epic_name.replace(' ', '-')
 fig_address = epic_name + '.html'
 fig.write_html('reports/' + fig_address, auto_open=True)
