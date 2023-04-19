@@ -10,7 +10,8 @@ username = const.USERNAME
 password = const.PASSWORD
 
 jira = JIRA(basic_auth=(username, password), options={
-            'server': 'https://dkjira.digikala.com'})
+                          'server': const.SERVER})
+
 project_epic = 'DKFC-11167'
 jql = '"Epic Link" = ' + project_epic
 
