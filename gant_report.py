@@ -20,7 +20,7 @@ project = pd.DataFrame(columns=['issue', 'start', 'action_by', 'from', 'to'])
 for issue in jira.search_issues(jql, maxResults=500):
     changelog = jira.issue(str(issue.key), expand='changelog').changelog
     action = {'issue': str(issue.key), 'start': datetime.strptime(
-                    str(issue.fields.created)[:19], '%Y-%m-%dT%H:%M:%S'), 'action_by': issue.fields.reporter.displayName, 'from': "", 'to': "Created"}
+                    str(issue.fields.created)[:19], '%Y-%m-%dT%H:%M:%S'), 'action_by': issue.fields.reporter.displayName, 'from': "", 'to': "Analysis Backlog"}
     project = project.append(action, ignore_index=True)
     
     for history in changelog.histories:
@@ -38,7 +38,8 @@ os.system('clear')
 project.sort_values(by=['issue', 'start']).reset_index(drop=True)
 
 for i in range(0, len(project)-1):
-    project.loc[i, 'end'] = project.loc[i+1, 'start']
+    if (project.loc[i, 'issue'] == project.loc[i+1, 'issue']):
+        project.loc[i, 'end'] = project.loc[i+1, 'start']
 
 fig = px.timeline(project, x_start='start', x_end='end', y='issue', color='to' ,title='Gantt Chart')
 
