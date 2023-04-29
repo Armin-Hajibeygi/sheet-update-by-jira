@@ -18,7 +18,7 @@ os.system('clear')
 # print("Jira Connected")
 
 # sheet_connector = workflow.connect_sheet(
-#     "[FC] Sprints - 01", int(sheet_ids["FC"]))
+#     "[FC] Sprints - 02", int(sheet_ids["FC"]))
 # print("G-Sheet Connected")
 # print("-----------------------------------------------")
 
@@ -35,7 +35,7 @@ jira_connector = workflow.connect_jira(username, password)
 print("Jira Connected")
 
 sheet_connector = workflow.connect_sheet(
-    "[DEL] Sprints - All", int(sheet_ids["DEL"]))
+    "DEL - Sprints - 02 - All", int(sheet_ids["DEL"]))
 print("G-Sheet Connected")
 print("-----------------------------------------------")
 

@@ -13,13 +13,14 @@ del_metric_id = int(sheet_ids.get("DEL_METRIC", 0))
 
 os.system('clear')
 
-input("Please Update the Sheet ID")
+print("-----------------------------------------------")
+print("... Connecting Metrics ...")
 
 # Update DEL_Metric
 jira_connector = workflow.connect_jira(username, password)
 print("Jira Connected")
 
-sheet_connector = workflow.connect_sheet("[DEL] Metrics", del_metric_id)
+sheet_connector = workflow.connect_sheet("DEL - Metrics - 02", del_metric_id)
 print("G-Sheet Connected")
 print("-----------------------------------------------")
 
