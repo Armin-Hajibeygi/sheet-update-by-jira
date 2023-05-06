@@ -1,10 +1,8 @@
 import workflow
 import os
 from jira import JIRA
-import csv
 import const
 import pandas as pd
-import time
 
 server_url = const.SERVER
 password = const.PASSWORD
