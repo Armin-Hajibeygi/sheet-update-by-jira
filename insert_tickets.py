@@ -43,7 +43,7 @@ if squad == 1:
                         "developed_by", "estimate", "review_by", "review_estimate", "impact", "status")
 elif squad == 2:
     sheet_connector = workflow.connect_sheet(
-        "[DEL] Sprints - All", int(sheet_ids["DEL"]))
+        "DEL - Sprints - 02 - All", int(sheet_ids["DEL"]))
     print("G-Sheet Connected")
     jql = 'project = LG AND Sprint in openSprints() AND  (status = "Sprint Backlog" OR status = In-Progress) AND Side = Back-End ORDER BY priority DESC, cf[10201] ASC'
     workflow.get_ticket(jira_connector, sheet_connector, jql, "key", "summary", "epic", "del_area",
