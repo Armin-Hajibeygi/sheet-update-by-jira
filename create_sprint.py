@@ -1,8 +1,6 @@
-import workflow
 import os
 from jira import JIRA
 import const
-import pandas as pd
 
 server_url = const.SERVER
 password = const.PASSWORD
@@ -15,10 +13,10 @@ os.system("clear")
 # TODO: Check if QA test scenario is needed?
 
 # Transition IDs
-to_analysis = 11
-analysis_backlog_to_analysis = 231
-analysis_backlog_to_ready = 461
-analysis_to_ready = 411
+to_analysis = '11'
+analysis_backlog_to_analysis = '231'
+analysis_backlog_to_ready = '461'
+analysis_to_ready = '411'
 
 # Make Unassigned tickets on the ready or sprint backlog, move to analysis
 jql = 'project = LG AND Sprint in openSprints() AND status in ("Sprint Backlog", Ready) AND assignee is EMPTY AND Side = Back-End AND priority = Medium'
@@ -87,5 +85,5 @@ for ticket_key in del_tickets.keys():
                 jira.transition_issue(issue, analysis_to_ready)
                 print(f"Moved to Ready")
 
-    except:
+    except ValueError:
         print("Ticket Passed")
