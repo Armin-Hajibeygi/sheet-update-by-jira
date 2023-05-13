@@ -14,7 +14,7 @@ def connect_sheet(sheet_name, worksheet_id):
     return googleSheet.Sheet(sheet_name, worksheet_id)
 
 
-def str_time_to_datetime(complete_date):
+def str_time_to_datetime(complete_date) -> datetime:
     year = int(complete_date[:4])
     month = int(complete_date[5:7])
     day = int(complete_date[8:10])
@@ -25,7 +25,7 @@ def str_time_to_datetime(complete_date):
     return time
 
 
-def date_diff(start_date, end_date):
+def date_diff(start_date, end_date) -> int:
     diff = end_date - start_date
     return int(diff.total_seconds() // 60)
 
@@ -69,7 +69,7 @@ def get_attr(issue, attr, jira):
         return get_first_time_in_progress(issue)
 
 
-def get_ticket(jira, sheet_connector, jql, *args):
+def get_ticket(jira, sheet_connector, jql, *args) -> None:
     issues = jira.search_issues(jql, maxResults=500)
     print(f"Number of tickets: {len(issues)}")
 
@@ -80,7 +80,7 @@ def get_ticket(jira, sheet_connector, jql, *args):
         insert_issues(ticket, sheet_connector, index, 0)
 
 
-def update_tickets(jira, sheet_connector, *args):
+def update_tickets(jira, sheet_connector, *args) -> None:
     sheet_tickets, remaining_tickets = sheet_connector.get_sheet_tickets()
 
     for index, ticket in enumerate(sheet_tickets):
@@ -94,7 +94,7 @@ def update_tickets(jira, sheet_connector, *args):
             insert_issues(ticket[1:], sheet_connector, index, 1)
 
 
-def update_field(jira, sheet_connector, column, field):
+def update_field(jira, sheet_connector, column, field) -> None:
     sheet_tickets, remaining_tickets = sheet_connector.get_sheet_tickets()
 
     index = 0
@@ -116,18 +116,18 @@ def insert_issues(ticket_info, sheet_connector, index, skip):
     sheet_connector.insert_ticket(ticket_info, skip, index + 2)
 
 
-def get_key(issue):
+def get_key(issue) -> str:
     key = issue.key
     return key
 
 
-def get_summary(issue):
+def get_summary(issue) -> str:
     summary = issue.fields.summary
     return summary
 
 
 # TODO remove jira or add a search function
-def get_epic(jira, issue):
+def get_epic(jira, issue) -> str:
     epic_jql = "key = " + str(issue.fields.customfield_10102)
     try:
         epic = jira.search_issues(epic_jql)
@@ -138,12 +138,12 @@ def get_epic(jira, issue):
     return epic_name
 
 
-def get_status(issue):
+def get_status(issue) -> str:
     status = str(issue.fields.status)
     return status
 
 
-def get_developed_by(issue):
+def get_developed_by(issue) -> str:
     issue_developed_by = issue.fields.customfield_10202
     try:
         developed_by = issue_developed_by.name
@@ -168,7 +168,7 @@ def get_impact(issue):
     return impact
 
 
-def get_estimate(issue):
+def get_estimate(issue) -> int:
     issue_estimate = issue.fields.customfield_10106
 
     try:
@@ -179,7 +179,7 @@ def get_estimate(issue):
     return estimate
 
 
-def get_reviewed_by(issue):
+def get_reviewed_by(issue) -> str:
     issue_reviewed_by = issue.fields.customfield_10508
 
     try:
@@ -190,7 +190,7 @@ def get_reviewed_by(issue):
     return reviewed_by
 
 
-def get_review_estimate(issue):
+def get_review_estimate(issue) -> int:
     issue_review_estimate = issue.fields.customfield_10530
 
     try:
@@ -201,20 +201,20 @@ def get_review_estimate(issue):
     return review_estimate
 
 
-def get_side(issue):
+def get_side(issue) -> str:
     ticket_key = get_key(issue)
     dash_place = ticket_key.rfind('-')
     side = ticket_key[:dash_place]
     return side
 
 
-def get_step(issue):
+def get_step(issue) -> str:
     issue_side = issue.fields.customfield_10531.value
 
     return issue_side
 
 
-def get_assignee(issue):
+def get_assignee(issue) -> str:
     try:
         assignee = issue.fields.assignee.name
     except AttributeError:
@@ -223,7 +223,7 @@ def get_assignee(issue):
     return assignee
 
 
-def get_unit_test_estimate(issue):
+def get_unit_test_estimate(issue) -> int:
     issue_unit_test_estimate = issue.fields.customfield_10751
 
     try:
@@ -234,14 +234,14 @@ def get_unit_test_estimate(issue):
     return unit_test_estimate
 
 
-def get_number_of_returns_from_review(issue):
+def get_number_of_returns_from_review(issue) -> int:
     try:
         return int(issue.fields.customfield_10752)
     except AttributeError:
         return 0
 
 
-def get_fc_area(issue):
+def get_fc_area(issue) -> str:
     try:
         fc_area = str(issue.fields.customfield_10770)
     except AttributeError:
@@ -250,7 +250,7 @@ def get_fc_area(issue):
     return fc_area
 
 
-def get_del_area(issue):
+def get_del_area(issue) -> str:
     try:
         del_area = str(issue.fields.customfield_10773)
     except AttributeError:
@@ -259,7 +259,7 @@ def get_del_area(issue):
     return del_area
 
 
-def get_total_time_in_progress(issue):
+def get_total_time_in_progress(issue) -> float:
     try:
         check = int(issue.fields.customfield_10806)
 
@@ -291,7 +291,7 @@ def get_total_time_in_progress(issue):
         return 0
 
 
-def get_first_time_in_progress(issue):
+def get_first_time_in_progress(issue) -> float:
     try:
         return (int(issue.fields.customfield_10804)) / 60
     except AttributeError:
