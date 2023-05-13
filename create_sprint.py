@@ -85,5 +85,5 @@ for ticket_key in del_tickets.keys():
                 jira.transition_issue(issue, analysis_to_ready)
                 print(f"Moved to Ready")
 
-    except ValueError:
+    except:
         print("Ticket Passed")

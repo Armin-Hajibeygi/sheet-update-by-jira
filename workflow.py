@@ -132,7 +132,7 @@ def get_epic(jira, issue):
     try:
         epic = jira.search_issues(epic_jql)
         epic_name = epic[0].fields.customfield_10104
-    except TypeError:
+    except:
         epic_name = ""
 
     return epic_name
@@ -147,7 +147,7 @@ def get_developed_by(issue):
     issue_developed_by = issue.fields.customfield_10202
     try:
         developed_by = issue_developed_by.name
-    except TypeError:
+    except:
         developed_by = ""
 
     return developed_by
@@ -162,7 +162,7 @@ def get_impact(issue):
     else:
         try:
             impact = issue_impact.value
-        except TypeError:
+        except:
             impact = "0"
 
     return impact
@@ -173,7 +173,7 @@ def get_estimate(issue):
 
     try:
         estimate = int(issue_estimate)
-    except TypeError:
+    except:
         estimate = 0
 
     return estimate
@@ -184,7 +184,7 @@ def get_reviewed_by(issue):
 
     try:
         reviewed_by = issue_reviewed_by.name
-    except TypeError:
+    except:
         reviewed_by = "-"
 
     return reviewed_by
@@ -195,7 +195,7 @@ def get_review_estimate(issue):
 
     try:
         review_estimate = int(issue_review_estimate)
-    except TypeError:
+    except:
         review_estimate = 0
 
     return review_estimate
@@ -217,7 +217,7 @@ def get_step(issue):
 def get_assignee(issue):
     try:
         assignee = issue.fields.assignee.name
-    except TypeError:
+    except:
         assignee = ""
 
     return assignee
@@ -228,7 +228,7 @@ def get_unit_test_estimate(issue):
 
     try:
         unit_test_estimate = int(issue_unit_test_estimate)
-    except TypeError:
+    except:
         unit_test_estimate = 0
 
     return unit_test_estimate
@@ -237,14 +237,14 @@ def get_unit_test_estimate(issue):
 def get_number_of_returns_from_review(issue):
     try:
         return int(issue.fields.customfield_10752)
-    except TypeError:
+    except:
         return 0
 
 
 def get_fc_area(issue):
     try:
         fc_area = str(issue.fields.customfield_10770)
-    except TypeError:
+    except:
         fc_area = ""
 
     return fc_area
@@ -253,7 +253,7 @@ def get_fc_area(issue):
 def get_del_area(issue):
     try:
         del_area = str(issue.fields.customfield_10773)
-    except TypeError:
+    except:
         del_area = ""
 
     return del_area
@@ -287,12 +287,12 @@ def get_total_time_in_progress(issue):
 
         return new_time / 60
 
-    except TypeError:
+    except:
         return 0
 
 
 def get_first_time_in_progress(issue):
     try:
         return (int(issue.fields.customfield_10804)) / 60
-    except TypeError:
+    except:
         return 0
