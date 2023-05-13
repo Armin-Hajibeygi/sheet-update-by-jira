@@ -1,6 +1,6 @@
 import googleSheet
 import const
-from jira import JIRA
+from jira import JIRA, JIRAError
 import datetime
 
 
@@ -132,7 +132,7 @@ def get_epic(jira, issue) -> str:
     try:
         epic = jira.search_issues(epic_jql)
         epic_name = epic[0].fields.customfield_10104
-    except AttributeError:
+    except JIRAError:
         epic_name = ""
 
     return epic_name
@@ -195,7 +195,7 @@ def get_review_estimate(issue) -> int:
 
     try:
         review_estimate = int(issue_review_estimate)
-    except AttributeError:
+    except (AttributeError, TypeError):
         review_estimate = 0
 
     return review_estimate
@@ -228,7 +228,7 @@ def get_unit_test_estimate(issue) -> int:
 
     try:
         unit_test_estimate = int(issue_unit_test_estimate)
-    except AttributeError:
+    except (AttributeError, TypeError):
         unit_test_estimate = 0
 
     return unit_test_estimate
@@ -237,14 +237,14 @@ def get_unit_test_estimate(issue) -> int:
 def get_number_of_returns_from_review(issue) -> int:
     try:
         return int(issue.fields.customfield_10752)
-    except AttributeError:
+    except (AttributeError, TypeError):
         return 0
 
 
 def get_fc_area(issue) -> str:
     try:
         fc_area = str(issue.fields.customfield_10770)
-    except AttributeError:
+    except (AttributeError, TypeError):
         fc_area = ""
 
     return fc_area
@@ -253,7 +253,7 @@ def get_fc_area(issue) -> str:
 def get_del_area(issue) -> str:
     try:
         del_area = str(issue.fields.customfield_10773)
-    except AttributeError:
+    except (AttributeError, TypeError):
         del_area = ""
 
     return del_area
@@ -287,12 +287,12 @@ def get_total_time_in_progress(issue) -> float:
 
         return new_time / 60
 
-    except AttributeError:
+    except (AttributeError, TypeError):
         return 0
 
 
 def get_first_time_in_progress(issue) -> float:
     try:
         return (int(issue.fields.customfield_10804)) / 60
-    except AttributeError:
+    except (AttributeError, TypeError):
         return 0
