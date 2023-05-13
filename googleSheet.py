@@ -4,12 +4,13 @@ import time
 
 class Sheet:
     def __init__(self, sheet_name, sheet_id):
+        self.sheet_tickets = None
         self.client = gspread.service_account(filename='client_secret.json')
         self.sheet = self.client.open(sheet_name).get_worksheet_by_id(sheet_id)
 
     def get_values(self):
         list_of_records = self.sheet.get_all_values()
-        return (list_of_records)
+        return list_of_records
 
     def insert_ticket(self, row, skip, index):
         for i in range(len(row)):
@@ -22,7 +23,7 @@ class Sheet:
 
         number_of_tickets = len(self.sheet.col_values(1))
 
-        if (number_of_tickets >= 60):
+        if number_of_tickets >= 60:
             self.sheet_tickets, number_of_tickets = self.get_sheet_tickets_long()
 
         else:
@@ -44,7 +45,7 @@ class Sheet:
 
         for i in range(number_of_tickets - 1):
             self.sheet_tickets.append(self.sheet.cell(i+2, 1).value)
-            if (i % 10 == 0):
+            if i % 10 == 0:
                 time.sleep(7)
 
         return self.sheet_tickets, number_of_tickets

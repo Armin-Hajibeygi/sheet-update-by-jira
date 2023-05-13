@@ -6,7 +6,7 @@ import datetime
 
 def connect_jira(username, password):
     jira_connector = JIRA(basic_auth=(username, password), options={
-                          'server': const.SERVER})
+        'server': const.SERVER})
     return jira_connector
 
 
@@ -107,13 +107,13 @@ def update_field(jira, sheet_connector, column, field):
 
         for issue in jira.search_issues(jql):
             ticket_field = get_attr(issue, field, jira)
-            sheet_connector.update_field(index+2, column, ticket_field)
+            sheet_connector.update_field(index + 2, column, ticket_field)
 
         index += 1
 
 
 def insert_issues(ticket_info, sheet_connector, index, skip):
-    sheet_connector.insert_ticket(ticket_info, skip, index+2)
+    sheet_connector.insert_ticket(ticket_info, skip, index + 2)
 
 
 def get_key(issue):
@@ -132,7 +132,7 @@ def get_epic(jira, issue):
     try:
         epic = jira.search_issues(epic_jql)
         epic_name = epic[0].fields.customfield_10104
-    except:
+    except TypeError:
         epic_name = ""
 
     return epic_name
@@ -147,7 +147,7 @@ def get_developed_by(issue):
     issue_developed_by = issue.fields.customfield_10202
     try:
         developed_by = issue_developed_by.name
-    except:
+    except TypeError:
         developed_by = ""
 
     return developed_by
@@ -162,7 +162,7 @@ def get_impact(issue):
     else:
         try:
             impact = issue_impact.value
-        except:
+        except TypeError:
             impact = "0"
 
     return impact
@@ -173,7 +173,7 @@ def get_estimate(issue):
 
     try:
         estimate = int(issue_estimate)
-    except:
+    except TypeError:
         estimate = 0
 
     return estimate
@@ -184,7 +184,7 @@ def get_reviewed_by(issue):
 
     try:
         reviewed_by = issue_reviewed_by.name
-    except:
+    except TypeError:
         reviewed_by = "-"
 
     return reviewed_by
@@ -195,7 +195,7 @@ def get_review_estimate(issue):
 
     try:
         review_estimate = int(issue_review_estimate)
-    except:
+    except TypeError:
         review_estimate = 0
 
     return review_estimate
@@ -217,7 +217,7 @@ def get_step(issue):
 def get_assignee(issue):
     try:
         assignee = issue.fields.assignee.name
-    except:
+    except TypeError:
         assignee = ""
 
     return assignee
@@ -228,7 +228,7 @@ def get_unit_test_estimate(issue):
 
     try:
         unit_test_estimate = int(issue_unit_test_estimate)
-    except:
+    except TypeError:
         unit_test_estimate = 0
 
     return unit_test_estimate
@@ -236,15 +236,15 @@ def get_unit_test_estimate(issue):
 
 def get_number_of_returns_from_review(issue):
     try:
-        return (int(issue.fields.customfield_10752))
-    except:
+        return int(issue.fields.customfield_10752)
+    except TypeError:
         return 0
 
 
 def get_fc_area(issue):
     try:
         fc_area = str(issue.fields.customfield_10770)
-    except:
+    except TypeError:
         fc_area = ""
 
     return fc_area
@@ -253,7 +253,7 @@ def get_fc_area(issue):
 def get_del_area(issue):
     try:
         del_area = str(issue.fields.customfield_10773)
-    except:
+    except TypeError:
         del_area = ""
 
     return del_area
@@ -263,18 +263,18 @@ def get_total_time_in_progress(issue):
     try:
         check = int(issue.fields.customfield_10806)
 
-        if ((check == 0) and (str(issue.fields.status) != "In-Progress") and (str(issue.fields.status) != "Unit Test")):
+        if (check == 0) and (str(issue.fields.status) != "In-Progress") and (str(issue.fields.status) != "Unit Test"):
             start_date_str = issue.fields.customfield_10801
             start_date = str_time_to_datetime(start_date_str)
 
             end_date_str = issue.fields.customfield_10802
             end_date = str_time_to_datetime(end_date_str)
 
-            if (end_date > start_date):
+            if end_date > start_date:
                 diff = date_diff(start_date, end_date)
                 current_time = int(issue.fields.customfield_10803)
                 new_time = int(current_time + diff)
-                if (current_time == 0):
+                if current_time == 0:
                     issue.update(fields={'customfield_10804': new_time})
             else:
                 new_time = int(issue.fields.customfield_10803)
@@ -285,14 +285,14 @@ def get_total_time_in_progress(issue):
         else:
             new_time = int(issue.fields.customfield_10803)
 
-        return (new_time / 60)
+        return new_time / 60
 
-    except:
+    except TypeError:
         return 0
 
 
 def get_first_time_in_progress(issue):
     try:
-        return ((int(issue.fields.customfield_10804)) / 60)
-    except:
+        return (int(issue.fields.customfield_10804)) / 60
+    except TypeError:
         return 0
