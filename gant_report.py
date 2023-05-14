@@ -6,7 +6,7 @@ import os
 import const
 
 
-def create_gantt(issues, title='Gantt Chart'):
+def create_gantt(issues, title='Gantt Chart', start_date=datetime.min):
     server_url = const.SERVER
     password = const.PASSWORD
     username = const.USERNAME
@@ -17,30 +17,36 @@ def create_gantt(issues, title='Gantt Chart'):
     for issue in issues:
         changelog = jira.issue(str(issue.key), expand='changelog').changelog
 
-        action = {'issue': str(issue.key),
-                  'start': datetime.strptime(str(issue.fields.created)[:19], '%Y-%m-%dT%H:%M:%S'),
-                  'action_by': issue.fields.reporter.displayName,
-                  'from': "",
-                  'status': "Analysis Backlog"}
-        actions.append(action)
+        start_time = datetime.strptime(str(issue.fields.created)[:19], '%Y-%m-%dT%H:%M:%S')
+        if start_time > start_date:
+            action = {'issue': str(issue.key),
+                      'start': datetime.strptime(str(issue.fields.created)[:19], '%Y-%m-%dT%H:%M:%S'),
+                      'action_by': issue.fields.reporter.displayName,
+                      'from': "",
+                      'status': "Analysis Backlog"}
+            actions.append(action)
 
         for history in changelog.histories:
             for item in history.items:
                 if item.field == 'status':
-                    action = {'issue': str(issue.key),
-                              'start': datetime.strptime(history.created[:19], '%Y-%m-%dT%H:%M:%S'),
-                              'action_by': history.author.displayName,
-                              'from': item.fromString,
-                              'status': item.toString}
-                    actions.append(action)
+                    start_time = datetime.strptime(history.created[:19], '%Y-%m-%dT%H:%M:%S')
+                    if start_time > start_date:
+                        action = {'issue': str(issue.key),
+                                  'start': datetime.strptime(history.created[:19], '%Y-%m-%dT%H:%M:%S'),
+                                  'action_by': history.author.displayName,
+                                  'from': item.fromString,
+                                  'status': item.toString}
+                        actions.append(action)
 
         if str(issue.fields.status) not in ['Done', 'Invalid']:
-            action = {'issue': str(issue.key),
-                      'start': datetime.now(),
-                      'action_by': issue.fields.reporter.displayName,
-                      'from': "",
-                      'status': str(issue.fields.status)}
-            actions.append(action)
+            start_time = datetime.now()
+            if start_time > start_date:
+                action = {'issue': str(issue.key),
+                          'start': datetime.now(),
+                          'action_by': issue.fields.reporter.displayName,
+                          'from': "",
+                          'status': str(issue.fields.status)}
+                actions.append(action)
 
     df = pd.DataFrame(actions)
 
