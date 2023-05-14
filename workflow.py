@@ -180,10 +180,8 @@ def get_estimate(issue) -> int:
 
 
 def get_reviewed_by(issue) -> str:
-    issue_reviewed_by = issue.fields.customfield_10508
-
     try:
-        reviewed_by = issue_reviewed_by.name
+        reviewed_by = issue.fields.customfield_10508.name
     except AttributeError:
         reviewed_by = "-"
 
