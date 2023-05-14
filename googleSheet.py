@@ -53,3 +53,6 @@ class Sheet:
     def update_field(self, row, column, value):
         self.sheet.update_cell(row, column, value)
         time.sleep(1)
+
+    def get_sheet_name(self):
+        return self.sheet.title
