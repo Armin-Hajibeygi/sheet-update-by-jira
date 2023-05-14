@@ -39,8 +39,8 @@ outbound_issues = list()
 inbound_issues = list()
 
 for ticket in tickets:
+    jql = 'key = ' + ticket
     if squad == 1:
-        jql = 'key = ' + ticket
         issue = jira.search_issues(jql)[0]
         fc_area = workflow.get_fc_area(issue)
 
@@ -50,7 +50,6 @@ for ticket in tickets:
             outbound_issues.append(issue)
 
     elif squad == 2:
-        jql = 'key = ' + ticket
         issues.append(jira.search_issues(jql)[0])
 
 os.system('clear')
