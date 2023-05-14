@@ -2,6 +2,7 @@ import os
 import csv
 import const
 import googleSheet
+import workflow
 from datetime import datetime
 from jira import JIRA
 from gant_report import create_gantt
@@ -27,9 +28,23 @@ tickets, number_of_tickets = sheet_connector.get_sheet_tickets()
 sheet_name = sheet_connector.get_sheet_name()
 
 issues = list()
+outbound_issues = list()
+inbound_issues = list()
+
 for ticket in tickets:
-    jql = 'key = ' + ticket
-    issues.append(jira.search_issues(jql)[0])
+    if squad == 1:
+        jql = 'key = ' + ticket
+        issue = jira.search_issues(jql)[0]
+        fc_area = workflow.get_fc_area(issue)
+
+        if fc_area == 'Inbound':
+            inbound_issues.append(issue)
+        elif fc_area == 'Outbound':
+            outbound_issues.append(issue)
+
+    elif squad == 2:
+        jql = 'key = ' + ticket
+        issues.append(jira.search_issues(jql)[0])
 
 os.system('clear')
 
@@ -53,4 +68,8 @@ else:
     start_date = datetime.min
     gantt_title = sheet_name + ' - All Time Report'
 
-create_gantt(issues, gantt_title, start_date)
+if squad == 1:
+    create_gantt(inbound_issues, gantt_title + ' - Inbound', start_date)
+    create_gantt(outbound_issues, gantt_title + ' - Outbound', start_date)
+elif squad == 2:
+    create_gantt(issues, gantt_title, start_date)
