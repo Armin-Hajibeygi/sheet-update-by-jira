@@ -32,19 +32,11 @@ for issue in issues:
 
 
 # Get new sprint tickets
-num_dsh_tickets = int(input("Input your DSH number of tickets: \n"))
+num_tickets = int(input("Input your DSH number of tickets: \n"))
 
 del_tickets = dict()
 
-for i in range(num_dsh_tickets):
-    ticket_id = input()
-    ticket_key = "LG-" + ticket_id
-    del_tickets[ticket_key] = i + 1
-
-
-num_lg_tickets = int(input("Input your LG/RLG number of tickets: \n"))
-
-for i in range(num_lg_tickets):
+for i in range(num_tickets):
     ticket_id = input()
     ticket_key = "LG-" + ticket_id
     del_tickets[ticket_key] = i + 1
