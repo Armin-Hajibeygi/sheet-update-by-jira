@@ -12,6 +12,9 @@ def create_gantt(issues, title='Gantt Chart', start_date=datetime.min):
     username = const.USERNAME
     jira = JIRA(basic_auth=(username, password), options={
         'server': server_url})
+    
+    first_step = "Analysis Backlog"
+    ignored_steps = ['Done', 'Invalid']
 
     actions = []
     for issue in issues:
@@ -23,7 +26,7 @@ def create_gantt(issues, title='Gantt Chart', start_date=datetime.min):
                       'start': datetime.strptime(str(issue.fields.created)[:19], '%Y-%m-%dT%H:%M:%S'),
                       'action_by': issue.fields.reporter.displayName,
                       'from': "",
-                      'status': "Analysis Backlog"}
+                      'status': first_step}
             actions.append(action)
 
         for history in changelog.histories:
@@ -38,7 +41,7 @@ def create_gantt(issues, title='Gantt Chart', start_date=datetime.min):
                                   'status': item.toString}
                         actions.append(action)
 
-        if str(issue.fields.status) not in ['Done', 'Invalid']:
+        if str(issue.fields.status) not in ignored_steps:
             start_time = datetime.now()
             if start_time > start_date:
                 action = {'issue': str(issue.key),
