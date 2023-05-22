@@ -71,8 +71,8 @@ class DevelopedBy(Field):
         self.jira_connector = jira_connector
 
     def get_field(self) -> str:
-        issue_developed_by = self.issue.fields.customfield_10202
         try:
+            issue_developed_by = self.issue.fields.customfield_10202
             self.value = issue_developed_by.name
         except AttributeError:
             self.value = ""
@@ -116,7 +116,7 @@ class Estimate(Field):
         return self.value
 
 
-class ReviewedBy(Field):
+class ReviewBy(Field):
     def __init__(self, issue, jira_connector) -> None:
         self.issue = issue
         self.value = ""
@@ -264,7 +264,7 @@ class_map = {
     "developed_by": DevelopedBy,
     "impact": Impact,
     "estimate": Estimate,
-    "reviewed_by": ReviewedBy,
+    "review_by": ReviewBy,
     "review_estimate": ReviewEstimate,
     "side": Side,
     "assignee": Assignee,
