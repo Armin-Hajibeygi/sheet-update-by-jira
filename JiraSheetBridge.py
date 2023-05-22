@@ -7,14 +7,14 @@ from jira import JIRA
 class Connector:
     class_map = fields.class_map
 
-    def __init__(self, sheet_name: str, worksheet_id: int, jql: str = None) -> None:
+    def __init__(self, sheet_name: str, worksheet_id: int) -> None:
         print("... Connecting ...")
 
         self.username = const.USERNAME
         self.password = const.PASSWORD
         self.server = const.SERVER
         self.fields = const.FIELDS
-        self.jql = jql
+        self.jql = const.JQL
         self.sheet_name = sheet_name
         self.worksheet_id = worksheet_id
         self.issue_details = list()
@@ -46,6 +46,19 @@ class Connector:
                     field_class = Connector.class_map.get(field_name)
                     self.issue_details.append(field_class(issue, self.jira_connector).get_field())
                 self.insert_issues(index, 0)
+
+    def create_report(self) -> None:
+        issues = self.jira_connector.search_issues(self.jql, maxResults=500)
+        print(f"Number of tickets: {len(issues)}")
+
+        for index, issue in enumerate(issues):
+            print(f"Remaining: {len(issues) - index}")
+
+            self.issue_details = list()
+            for field_name in self.fields:
+                field_class = Connector.class_map.get(field_name)
+                self.issue_details.append(field_class(issue, self.jira_connector).get_field())
+            self.insert_issues(index, 0)
 
     def insert_issues(self, index: int, skip: int) -> None:
         self.google_sheet_connector.insert_ticket(self.issue_details, skip, index + 2)
