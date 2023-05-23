@@ -1,12 +1,13 @@
 from abc import ABC, abstractmethod
-from jira import JIRA, JIRAError
+from jira import JIRAError
+from jira.resources import Issue
+from jira.client import JIRA
 
 
 class Field(ABC):
     @abstractmethod
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
-        self.jira_connector = jira_connector
 
     @abstractmethod
     def get_field(self):
@@ -14,10 +15,9 @@ class Field(ABC):
 
 
 class Key(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = ""
-        self.jira_connector = jira_connector
 
     def get_field(self) -> str:
         self.value = self.issue.key
@@ -25,19 +25,17 @@ class Key(Field):
 
 
 class Summary(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = ""
-        self.jira_connector = jira_connector
 
     def get_field(self) -> str:
         self.value = self.issue.fields.summary
         return self.value
 
 
-# TODO
 class Epic(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue, jira_connector: JIRA) -> None:
         self.issue = issue
         self.value = ""
         self.jira_connector = jira_connector
@@ -54,10 +52,9 @@ class Epic(Field):
 
 
 class Status(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = ""
-        self.jira_connector = jira_connector
 
     def get_field(self) -> str:
         self.value = str(self.issue.fields.status)
@@ -65,10 +62,9 @@ class Status(Field):
 
 
 class DevelopedBy(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = ""
-        self.jira_connector = jira_connector
 
     def get_field(self) -> str:
         try:
@@ -81,10 +77,9 @@ class DevelopedBy(Field):
 
 
 class Impact(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = ""
-        self.jira_connector = jira_connector
 
     def get_field(self) -> str:
         issue_priority = self.issue.fields.priority
@@ -101,10 +96,9 @@ class Impact(Field):
 
 
 class Estimate(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = 0
-        self.jira_connector = jira_connector
 
     def get_field(self) -> int:
         issue_estimate = self.issue.fields.customfield_10106
@@ -117,10 +111,9 @@ class Estimate(Field):
 
 
 class ReviewBy(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = ""
-        self.jira_connector = jira_connector
 
     def get_field(self) -> str:
         try:
@@ -131,10 +124,9 @@ class ReviewBy(Field):
 
 
 class ReviewEstimate(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = 0
-        self.jira_connector = jira_connector
 
     def get_field(self) -> int:
         issue_review_estimate = self.issue.fields.customfield_10530
@@ -147,10 +139,9 @@ class ReviewEstimate(Field):
 
 
 class Side(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = ""
-        self.jira_connector = jira_connector
 
     def get_field(self) -> str:
         ticket_key = self.issue.key
@@ -160,10 +151,9 @@ class Side(Field):
 
 
 class Assignee(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = ""
-        self.jira_connector = jira_connector
 
     def get_field(self) -> str:
         try:
@@ -174,10 +164,9 @@ class Assignee(Field):
 
 
 class UnitTestEstimate(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = 0
-        self.jira_connector = jira_connector
 
     def get_field(self) -> int:
         issue_unit_test_estimate = self.issue.fields.customfield_10751
@@ -190,11 +179,11 @@ class UnitTestEstimate(Field):
 
 
 class ReturnsFromReview(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = 0
-        self.jira_connector = jira_connector
 
+    @property
     def get_field(self) -> int:
         try:
             self.value = int(self.issue.fields.customfield_10752)
@@ -204,10 +193,9 @@ class ReturnsFromReview(Field):
 
 
 class FcArea(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = ""
-        self.jira_connector = jira_connector
 
     def get_field(self) -> str:
         try:
@@ -218,10 +206,9 @@ class FcArea(Field):
 
 
 class DelArea(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = ""
-        self.jira_connector = jira_connector
 
     def get_field(self) -> str:
         try:
@@ -234,10 +221,9 @@ class DelArea(Field):
 
 # TODO
 class TotalTimeInProgress(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = ""
-        self.jira_connector = jira_connector
 
     def get_field(self) -> str:
         self.value = self.issue.fields.summary
@@ -246,10 +232,9 @@ class TotalTimeInProgress(Field):
 
 # TODO
 class FirstTimeInProgress(Field):
-    def __init__(self, issue, jira_connector) -> None:
+    def __init__(self, issue: Issue) -> None:
         self.issue = issue
         self.value = ""
-        self.jira_connector = jira_connector
 
     def get_field(self) -> str:
         self.value = self.issue.fields.summary
