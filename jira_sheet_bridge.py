@@ -1,14 +1,32 @@
+"""
+This module contains integrating Jira with Google sheet.
+"""
+
+from jira import JIRA
+from jira.resources import Issue
 import googleSheet
 import const
 import fields
-from jira import JIRA
-from jira.resources import Issue
 
 
 class Connector:
+    """
+    This class connects Jira to Google sheet.
+    Get sheet_name and worksheet_id from outside the class and define others with const.py
+
+    Public Methods:
+        create_report()
+        update_report()
+    """
     class_map = fields.class_map
 
     def __init__(self, sheet_name: str, worksheet_id: int) -> None:
+        """
+        Parameters
+        ----------
+        sheet_name
+        worksheet_id
+        """
         print("... Connecting ...")
 
         self._username = const.USERNAME
@@ -18,7 +36,7 @@ class Connector:
         self._jql = const.JQL
         self._sheet_name = sheet_name
         self._worksheet_id = worksheet_id
-        self._issue_details = list()
+        self._issue_details = []
         self._sheet_issues = None
         self._remaining_issues = None
 
@@ -30,9 +48,16 @@ class Connector:
         print("Google Sheet Connected!")
 
     def _get_issues_from_sheet(self) -> None:
-        self._sheet_issues, self._remaining_issues = self._google_sheet_connector.get_sheet_tickets()
+        """
+        Get issue keys from Google sheet.
+        """
+        self._sheet_issues, self._remaining_issues = \
+            self._google_sheet_connector.get_sheet_tickets()
 
     def update_report(self) -> None:
+        """
+        Update Google sheet reports.
+        """
         self._get_issues_from_sheet()
         for index, ticket in enumerate(self._sheet_issues):
             jql = "key = " + ticket
@@ -42,6 +67,9 @@ class Connector:
                 self._insert_issue(issue, index, 0)
 
     def create_report(self) -> None:
+        """
+        Create Google sheet reports based on JQL.
+        """
         issues = self._jira_connector.search_issues(self._jql, maxResults=500)
         print(f"Number of tickets: {len(issues)}")
         for index, issue in enumerate(issues):
@@ -49,7 +77,16 @@ class Connector:
             self._insert_issue(issue, index, 0)
 
     def _insert_issue(self, issue: Issue, index: int, skip: int) -> None:
-        self._issue_details = list()
+        """
+        Insert issues to the Google sheet using googleSheet module.
+
+        Parameters
+        ----------
+        issue
+        index
+        skip
+        """
+        self._issue_details = []
         for field_name in self._fields:
             field_class = Connector.class_map.get(field_name)
             if field_name == "epic":
