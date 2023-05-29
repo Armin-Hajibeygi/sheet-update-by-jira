@@ -95,6 +95,25 @@ class Impact(Field):
         return self.value
 
 
+class DevImpact(Field):
+    def __init__(self, issue: Issue) -> None:
+        self.issue = issue
+        self.value = ""
+
+    def get_field(self) -> str:
+        issue_priority = self.issue.fields.priority
+        issue_impact = self.issue.fields.customfield_10811
+
+        if (issue_priority.name == "High") or (issue_priority.name == "Highest"):
+            self.value = issue_priority.name
+        else:
+            try:
+                self.value = issue_impact.value
+            except AttributeError:
+                self.value = "0"
+        return self.value
+
+
 class Estimate(Field):
     def __init__(self, issue: Issue) -> None:
         self.issue = issue
