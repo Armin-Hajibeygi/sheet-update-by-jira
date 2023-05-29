@@ -248,6 +248,7 @@ class_map = {
     "status": Status,
     "developed_by": DevelopedBy,
     "impact": Impact,
+    "dev_impact": DevImpact,
     "estimate": Estimate,
     "review_by": ReviewBy,
     "review_estimate": ReviewEstimate,
