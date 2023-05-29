@@ -32,8 +32,9 @@ class Connector:
         self._username = const.USERNAME
         self._password = const.PASSWORD
         self._server = const.SERVER
-        self._fields = const.FIELDS
-        self._jql = const.JQL
+        self._team_number = const.TEAM_NUMBER
+        self._jql = const.JQL[self._team_number - 1]
+        self._fields = const.FIELDS[self._team_number - 1]
         self._sheet_name = sheet_name
         self._worksheet_id = worksheet_id
         self._issue_details = []
