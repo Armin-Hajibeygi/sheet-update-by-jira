@@ -20,7 +20,7 @@ class Connector:
     """
     class_map = fields.class_map
 
-    def __init__(self, sheet_name: str, worksheet_id: int) -> None:
+    def __init__(self, sheet_name: str, worksheet_id: int, sheet_num: int) -> None:
         """
         Parameters
         ----------
@@ -32,9 +32,8 @@ class Connector:
         self._username = const.USERNAME
         self._password = const.PASSWORD
         self._server = const.SERVER
-        self._team_number = const.TEAM_NUMBER
-        self._jql = const.JQL[self._team_number - 1]
-        self._fields = const.FIELDS[self._team_number - 1]
+        self._jql = const.JQL[sheet_num]
+        self._fields = const.FIELDS[sheet_num]
         self._sheet_name = sheet_name
         self._worksheet_id = worksheet_id
         self._issue_details = []
