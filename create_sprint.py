@@ -32,7 +32,7 @@ for issue in issues:
 
 
 # Get new sprint tickets
-num_tickets = int(input("Input your DSH number of tickets: \n"))
+num_tickets = int(input("Input your number of tickets: \n"))
 
 del_tickets = dict()
 
