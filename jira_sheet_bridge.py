@@ -18,6 +18,7 @@ class Connector:
         create_report()
         update_report()
     """
+
     class_map = fields.class_map
 
     def __init__(self, sheet_name: str, worksheet_id: int, sheet_num: int) -> None:
@@ -40,19 +41,25 @@ class Connector:
         self._sheet_issues = None
         self._remaining_issues = None
 
-        self._jira_connector = JIRA(basic_auth=(self._username, self._password), options={
-            'server': self._server})
+        self._jira_connector = JIRA(
+            basic_auth=(self._username, self._password),
+            options={"server": self._server},
+        )
         print("Jira Connected!")
 
-        self._google_sheet_connector = googleSheet.Sheet(self._sheet_name, self._worksheet_id)
+        self._google_sheet_connector = googleSheet.Sheet(
+            self._sheet_name, self._worksheet_id
+        )
         print("Google Sheet Connected!")
 
     def _get_issues_from_sheet(self) -> None:
         """
         Get issue keys from Google sheet.
         """
-        self._sheet_issues, self._remaining_issues = \
-            self._google_sheet_connector.get_sheet_tickets()
+        (
+            self._sheet_issues,
+            self._remaining_issues,
+        ) = self._google_sheet_connector.get_sheet_tickets()
 
     def update_report(self) -> None:
         """
@@ -90,7 +97,9 @@ class Connector:
         for field_name in self._fields:
             field_class = Connector.class_map.get(field_name)
             if field_name == "epic":
-                self._issue_details.append(field_class(issue, self._jira_connector).get_field())
+                self._issue_details.append(
+                    field_class(issue, self._jira_connector).get_field()
+                )
             else:
                 self._issue_details.append(field_class(issue).get_field())
         self._google_sheet_connector.insert_ticket(self._issue_details, skip, index + 2)
