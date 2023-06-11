@@ -13,10 +13,10 @@ os.system("clear")
 # TODO: Check if QA test scenario is needed?
 
 # Transition IDs
-to_analysis = '11'
-analysis_backlog_to_analysis = '231'
-analysis_backlog_to_ready = '461'
-analysis_to_ready = '411'
+to_analysis = "11"
+analysis_backlog_to_analysis = "231"
+analysis_backlog_to_ready = "461"
+analysis_to_ready = "411"
 
 # Make Unassigned tickets on the ready or sprint backlog, move to analysis
 jql = 'project = LG AND Sprint in openSprints() AND status in ("Sprint Backlog", Ready) AND assignee is EMPTY AND Side = Back-End AND priority = Medium'
@@ -53,8 +53,7 @@ for ticket_key in del_tickets.keys():
     print(ticket_key)
     try:
         # Set new sprint
-        jira.add_issues_to_sprint(
-            sprint_id=del_sprint_id, issue_keys=[ticket_key])
+        jira.add_issues_to_sprint(sprint_id=del_sprint_id, issue_keys=[ticket_key])
         print(f"Sprint Set to {del_sprint_name}")
 
         # Create ticket JQL
@@ -64,8 +63,7 @@ for ticket_key in del_tickets.keys():
         for issue in issues:
             # Update impact
             issue.update(
-                fields={"customfield_10201": {
-                    "value": str(del_tickets[ticket_key])}}
+                fields={"customfield_10201": {"value": str(del_tickets[ticket_key])}}
             )
             print(f"Impact Updated to {del_tickets[ticket_key]}")
 

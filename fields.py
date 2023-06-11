@@ -164,7 +164,7 @@ class Side(Field):
 
     def get_field(self) -> str:
         ticket_key = self.issue.key
-        dash_place = ticket_key.rfind('-')
+        dash_place = ticket_key.rfind("-")
         self.value = ticket_key[:dash_place]
         return self.value
 
@@ -276,5 +276,5 @@ class_map = {
     "unit_test_estimate": UnitTestEstimate,
     "returns_from_review": ReturnsFromReview,
     "fc_area": FcArea,
-    "del_area": DelArea
+    "del_area": DelArea,
 }

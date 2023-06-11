@@ -6,10 +6,9 @@ server_url = const.SERVER
 password = const.PASSWORD
 username = const.USERNAME
 
-project_epic = 'LG-3093'
+project_epic = "LG-3093"
 
-jira = JIRA(basic_auth=(username, password), options={
-    'server': server_url})
+jira = JIRA(basic_auth=(username, password), options={"server": server_url})
 
 epic_jql = "key = " + project_epic
 epic = jira.search_issues(epic_jql)

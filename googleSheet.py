@@ -5,7 +5,7 @@ import time
 class Sheet:
     def __init__(self, sheet_name, sheet_id):
         self.sheet_tickets = None
-        self.client = gspread.service_account(filename='client_secret.json')
+        self.client = gspread.service_account(filename="client_secret.json")
         self.sheet = self.client.open(sheet_name).get_worksheet_by_id(sheet_id)
 
     def get_values(self):
@@ -14,7 +14,7 @@ class Sheet:
 
     def insert_ticket(self, row, skip, index):
         for i in range(len(row)):
-            self.sheet.update_cell(index, i+1+skip, row[i])
+            self.sheet.update_cell(index, i + 1 + skip, row[i])
 
         time.sleep(8)
 
@@ -31,7 +31,7 @@ class Sheet:
             print("Loading Tickets ...")
 
             for i in range(number_of_tickets - 1):
-                self.sheet_tickets.append(self.sheet.cell(i+2, 1).value)
+                self.sheet_tickets.append(self.sheet.cell(i + 2, 1).value)
 
         return self.sheet_tickets, number_of_tickets
 
@@ -44,7 +44,7 @@ class Sheet:
         print("^^ Packets are flowing through the internet to you ^^")
 
         for i in range(number_of_tickets - 1):
-            self.sheet_tickets.append(self.sheet.cell(i+2, 1).value)
+            self.sheet_tickets.append(self.sheet.cell(i + 2, 1).value)
             if i % 10 == 0:
                 time.sleep(7)
 

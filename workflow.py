@@ -5,8 +5,9 @@ import datetime
 
 
 def connect_jira(username, password):
-    jira_connector = JIRA(basic_auth=(username, password), options={
-        'server': const.SERVER})
+    jira_connector = JIRA(
+        basic_auth=(username, password), options={"server": const.SERVER}
+    )
     return jira_connector
 
 
@@ -201,7 +202,7 @@ def get_review_estimate(issue) -> int:
 
 def get_side(issue) -> str:
     ticket_key = get_key(issue)
-    dash_place = ticket_key.rfind('-')
+    dash_place = ticket_key.rfind("-")
     side = ticket_key[:dash_place]
     return side
 
@@ -261,7 +262,11 @@ def get_total_time_in_progress(issue) -> float:
     try:
         check = int(issue.fields.customfield_10806)
 
-        if (check == 0) and (str(issue.fields.status) != "In-Progress") and (str(issue.fields.status) != "Unit Test"):
+        if (
+            (check == 0)
+            and (str(issue.fields.status) != "In-Progress")
+            and (str(issue.fields.status) != "Unit Test")
+        ):
             start_date_str = issue.fields.customfield_10801
             start_date = str_time_to_datetime(start_date_str)
 
@@ -273,12 +278,12 @@ def get_total_time_in_progress(issue) -> float:
                 current_time = int(issue.fields.customfield_10803)
                 new_time = int(current_time + diff)
                 if current_time == 0:
-                    issue.update(fields={'customfield_10804': new_time})
+                    issue.update(fields={"customfield_10804": new_time})
             else:
                 new_time = int(issue.fields.customfield_10803)
 
-            issue.update(fields={'customfield_10803': new_time})
-            issue.update(fields={'customfield_10806': 1})
+            issue.update(fields={"customfield_10803": new_time})
+            issue.update(fields={"customfield_10806": 1})
 
         else:
             new_time = int(issue.fields.customfield_10803)
