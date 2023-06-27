@@ -56,7 +56,7 @@ os.system("clear")
 time_limitation = int(input("Choose Time Limitation: \n 1.2 Weeks \n 2.All Time \n"))
 if time_limitation == 1:
     del_sprint_id = jira.sprints(del_board_id)[-1].id
-    fc_sprint_id = jira.sprints(fc_board_id)[-1].id
+    fc_sprint_id = jira.sprints(fc_board_id)[-2].id
 
     if squad == 1:
         sprint = jira.sprint(fc_sprint_id)

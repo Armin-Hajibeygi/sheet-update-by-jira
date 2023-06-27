@@ -124,7 +124,7 @@ class Estimate(Field):
 
         try:
             self.value = int(issue_estimate)
-        except (AttributeError, ValueError):
+        except (AttributeError, ValueError, TypeError):
             self.value = 0
         return self.value
 

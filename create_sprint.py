@@ -26,9 +26,9 @@ issues = jira.search_issues(jql, maxResults=500)
 print(len(issues))
 
 # TODO: move to analysis backlog?
-for issue in issues:
-    print(f"{issue.key} moved to analysis")
-    jira.transition_issue(issue, to_analysis)
+# for issue in issues:
+#     print(f"{issue.key} moved to analysis")
+#     jira.transition_issue(issue, to_analysis)
 
 
 # Get new sprint tickets
@@ -57,23 +57,23 @@ for ticket_key in del_tickets.keys():
         print(f"Sprint Set to {del_sprint_name}")
 
         # Create ticket JQL
-        issue_jql = "key = " + ticket_key
-        issues = jira.search_issues(jql_str=issue_jql)
-
-        for issue in issues:
-            # Update impact
-            issue.update(
-                fields={"customfield_10201": {"value": str(del_tickets[ticket_key])}}
-            )
-            print(f"Impact Updated to {del_tickets[ticket_key]}")
-
-            # Update status
-            if issue.fields.status.name == "Analysis Backlog":
-                jira.transition_issue(issue, analysis_backlog_to_ready)
-                print(f"Moved to Ready")
-            if issue.fields.status.name == "Analysis":
-                jira.transition_issue(issue, analysis_to_ready)
-                print(f"Moved to Ready")
+        # issue_jql = "key = " + ticket_key
+        # issues = jira.search_issues(jql_str=issue_jql)
+        #
+        # for issue in issues:
+        #     # Update impact
+        #     issue.update(
+        #         fields={"customfield_10201": {"value": str(del_tickets[ticket_key])}}
+        #     )
+        #     print(f"Impact Updated to {del_tickets[ticket_key]}")
+        #
+        #     # Update status
+        #     if issue.fields.status.name == "Analysis Backlog":
+        #         jira.transition_issue(issue, analysis_backlog_to_ready)
+        #         print(f"Moved to Ready")
+        #     if issue.fields.status.name == "Analysis":
+        #         jira.transition_issue(issue, analysis_to_ready)
+        #         print(f"Moved to Ready")
 
     except:
         print("Ticket Passed")

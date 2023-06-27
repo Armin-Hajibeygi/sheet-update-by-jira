@@ -7,7 +7,6 @@ with open("sheet_id.csv") as f:
 
 
 sheets = [
-    {"sheet_name": "DEL - Sprints - 02 - All", "worksheet_id": int(sheet_ids["DEL"])},
     {"sheet_name": "[Platform] Sprints", "worksheet_id": int(sheet_ids["Plat"])},
 ]
 
