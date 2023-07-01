@@ -11,8 +11,8 @@ import fields
 
 class Connector:
     """
-    This class connects Jira to Google sheet.
-    Get sheet_name and worksheet_id from outside the class and define others with const.py
+    This class connects Jira to a Google sheet.
+    Get sheet_name from outside the class and define others with const.py
 
     Public Methods:
         create_report()
@@ -21,12 +21,11 @@ class Connector:
 
     class_map = fields.class_map
 
-    def __init__(self, sheet_name: str, worksheet_id: int, sheet_num: int) -> None:
+    def __init__(self, sheet_name: str, sheet_num: int) -> None:
         """
         Parameters
         ----------
         sheet_name
-        worksheet_id
         """
         print("... Connecting ...")
 
@@ -36,7 +35,6 @@ class Connector:
         self._jql = const.JQL[sheet_num]
         self._fields = const.FIELDS[sheet_num]
         self._sheet_name = sheet_name
-        self._worksheet_id = worksheet_id
         self._issue_details = []
         self._sheet_issues = None
         self._remaining_issues = None
@@ -47,9 +45,7 @@ class Connector:
         )
         print("Jira Connected!")
 
-        self._google_sheet_connector = googleSheet.Sheet(
-            self._sheet_name, self._worksheet_id
-        )
+        self._google_sheet_connector = googleSheet.Sheet(self._sheet_name)
         print("Google Sheet Connected!")
 
     def _get_issues_from_sheet(self) -> None:
