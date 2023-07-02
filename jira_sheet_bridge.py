@@ -21,7 +21,7 @@ class Connector:
 
     class_map = fields.class_map
 
-    def __init__(self, sheet_name: str, sheet_num: int) -> None:
+    def __init__(self, sheet_name: str, sheet_num: int = 0) -> None:
         """
         Parameters
         ----------

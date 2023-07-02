@@ -4,6 +4,6 @@ sheets = [
     {"sheet_name": "[Platform] Sprints"},
 ]
 
-for sheet_num, sheet in enumerate(sheets):
-    connector = jira_sheet_bridge.Connector(sheet["sheet_name"], sheet_num)
+for sheet in sheets:
+    connector = jira_sheet_bridge.Connector(sheet["sheet_name"])
     connector.update_report()
