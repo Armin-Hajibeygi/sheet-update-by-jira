@@ -119,11 +119,11 @@ class Estimate(Field):
         self.issue = issue
         self.value = 0
 
-    def get_field(self) -> int:
+    def get_field(self) -> float:
         issue_estimate = self.issue.fields.customfield_10106
 
         try:
-            self.value = int(issue_estimate)
+            self.value = float(issue_estimate)
         except (AttributeError, ValueError, TypeError):
             self.value = 0
         return self.value
